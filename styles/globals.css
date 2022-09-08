@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  min-height: 100vh;
+}
+
+body {
+  padding: 8vh 0;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 14px;
+  max-width: 1116px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+}
+
+#__next {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.w3a-modal {
+  z-index: 100;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.progress {
+  background-color: #47a1b5;
+  height: 8px;
+}
+
+.progress .progress-bar {
+  background-color: #fe5f55;
+}
