@@ -1,5 +1,5 @@
 // ** React Imports
-import { Box, Grid,  } from '@mui/material'
+import { Box, CardContent, Grid,  } from '@mui/material'
 
 import { ReactNode } from 'react'
 
@@ -11,6 +11,14 @@ import About from 'src/pages/About'
 // ** Type Import
 import { Settings } from 'src/@core/context/settingsContext'
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
+
+// ** Demo Imports
+import Feature1 from './Feature1'
+import Feature2 from './Feature2'
+import Feature3 from './Feature3'
+import Footer1 from './Footer1'
+import Journey from './Journey'
+import Problem from './Problem'
 
 
 interface Props {
@@ -36,14 +44,27 @@ const App = (props: Props) => {
   return (
    
       <>
-      <Box {...props}>
+      <Box className ='content-center' {...props}>
         <Grid container spacing={6}>
-          <Grid item xs={6}>
-            <VerticalNavHeader {...props}/>
-            <About/>
-          </Grid>
+        <Grid item xs={12}>
+          <VerticalNavHeader {...props}/>
+        </Grid>
+        
+        <Grid item><About/></Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Feature1 />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Feature2 />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Feature3 />
+        </Grid>
+
+        <Grid item><Problem/></Grid>
         </Grid>
       </Box>
+      <CardContent><Journey/><Footer1/></CardContent>
       </>
   )
 }

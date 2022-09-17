@@ -66,6 +66,7 @@ const VerticalNavHeader = (props: Props) => {
       ) : (
         <Link href='/' passHref>
           <StyledLink>
+          <Img height='65' width='130' alt='Ed3Zapp Logo' src='/images/ed3zappv6.png' />
             <HeaderTitle variant='h6' sx={{ ml: 3 }}>
               {themeConfig.templateName}
             </HeaderTitle>
