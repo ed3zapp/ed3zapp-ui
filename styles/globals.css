@@ -1,46 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-html {
-  min-height: 100vh;
-}
-
+html,
 body {
-  padding: 8vh 0;
-  font-family: "IBM Plex Sans", sans-serif;
-  font-size: 14px;
-  max-width: 1116px;
-  margin: 0 auto;
-  box-sizing: border-box;
-  min-height: 100vh;
-  display: flex;
+  min-height: 100%;
 }
 
 #__next {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+  height: 100%;
 }
 
-.w3a-modal {
-  z-index: 100;
+code {
+  font-family: 'Inter', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+  padding: 0.1rem 0.4rem;
+  font-size: 90%;
+  color: #d400ff;
+  border-radius: 0.1335rem;
 }
-
-a {
-  color: inherit;
-  text-decoration: none;
+code:not([class*='language-']):before,
+code:not([class*='language-']):after {
+  content: '`';
 }
-
-* {
-  box-sizing: border-box;
-}
-
-.progress {
-  background-color: #47a1b5;
-  height: 8px;
-}
-
-.progress .progress-bar {
-  background-color: #fe5f55;
+code[class*='language-'] {
+  padding: 0;
 }
