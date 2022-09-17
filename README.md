@@ -1,2 +1,2 @@
-# ed3zapp-ui
-User Interface for ed3Zapp
+# ed3Zapp-ui
+User Interface for Ed3Zapp
