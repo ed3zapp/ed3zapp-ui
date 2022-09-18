@@ -36,7 +36,11 @@ const ContentCreatorEnrollForm: React.FC<IProps> = ({open2, onClose}) => {
         let endTime = Math.floor(Date.now()); // in seconds
 
         setLoading(true);
-        const { grantUserAccessToTable, userTableEntry, contentCreatorTableEntry } = useTableland();
+        const { grantUserAccessToTable, 
+                    userTableEntry, 
+                    contentCreatorTableEntry,
+                    getContentCreatorId
+                } = useTableland();
 
         // Grant access to users table
         startTime = Math.floor(Date.now());
@@ -73,9 +77,21 @@ const ContentCreatorEnrollForm: React.FC<IProps> = ({open2, onClose}) => {
         endTime = Math.floor(Date.now());
         console.log("CCEnrollForm: Time to insert learners: " + (endTime - startTime));
         
+        // Get content creator id
+        startTime = Math.floor(Date.now());
+        const tb_contentCreatorId = await getContentCreatorId(provider, wallet);
+        console.log("Content creator ID: " + tb_contentCreatorId)
+        endTime = Math.floor(Date.now());
+        console.log("CCEnrollForm: Time to get content creator ID: " + (endTime - startTime));
+
         setLoading(false);
         onClose()
-        router.push("/ccTest");
+        router.push({
+            pathname: '/contentCreatorCourses',
+            query: {
+                contentCreatorId: tb_contentCreatorId
+            }
+        }, '/contentCreatorCourses');
       };
 
   return (

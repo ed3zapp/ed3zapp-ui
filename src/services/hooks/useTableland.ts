@@ -109,6 +109,21 @@ export function useTableland() {
     return false;
   }
 
+  // Get content creator Id
+  const getContentCreatorId = async (provider : ethers.providers.Web3Provider, address: string) => {
+    const tableland = await getConnection(provider);
+    const queryResult = await tableland.read(`SELECT id FROM ${TableName_ContentCreators} WHERE userAddress='${address}';`);
+    const entries = resultsToObjects(queryResult);
+
+    if (entries.length == 1) {
+      for (const { id } of entries) {
+        return parseInt(id, 0);
+      }
+    }
+
+    return 9999;
+  }
+
   // Get user type
   const getUserType = async (provider : ethers.providers.Web3Provider, address: string) => {
     const tableland = await getConnection(provider);
@@ -187,6 +202,7 @@ export function useTableland() {
             getUserType,
             contentCreatorTableEntry,
             learnerTableEntry,
-            testDeleteAllTableEntries
+            testDeleteAllTableEntries,
+            getContentCreatorId
           }
 }

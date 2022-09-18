@@ -20,7 +20,7 @@ const navigation = ( userType: number ): VerticalNavItemsType => {
         {
           title: 'Account Details',
           icon: HomeOutline,
-          path: '/'
+          path: '/ccTest'
         },
         {
           sectionTitle: 'Pages'
@@ -33,7 +33,7 @@ const navigation = ( userType: number ): VerticalNavItemsType => {
         {
           title: 'Courses',
           icon: BookOpenBlankVariant,
-          path: '/'
+          path: '/contentCreatorCourses'
         },
         {
           title: 'Modules',
