@@ -54,53 +54,53 @@ const ContentCreatorCourses = () => {
     const [contentCreatorId, setContentCreatorId] = useState(0);
     const { getContentCreatorId } = useTableland();
 
-    const validateContentCreatorId = async() => {
+    const fetchCourses = async (retry = false, retries = 0) => {
       const id = parseInt(router.query.contentCreatorId as string, 0);
       console.log("ContentCreatorCourses: ContentCreatorId from router: " + id)
       
+      let tb_contentCreatorId: number;
       if(isNaN(id)) {
         console.log("ContentCreatorCourses: Fetching Id from table...")
 
         // Get content creator id
         const startTime = Math.floor(Date.now());
-        const tb_contentCreatorId: number = await getContentCreatorId(provider, wallet);
+        tb_contentCreatorId = await getContentCreatorId(provider, wallet);
         console.log("ContentCreatorCourses: Content creator ID: " + tb_contentCreatorId)
         const endTime = Math.floor(Date.now());
         console.log("ContentCreatorCourses: Time to get content creator ID: " + (endTime - startTime));
         setContentCreatorId(tb_contentCreatorId);
       } else {
+        tb_contentCreatorId = id;
         setContentCreatorId(id);
       }
-    } 
 
-    const fetchCourses = async (retry = false, retries = 0) => {
-        console.log("we got the ID: " + contentCreatorId)
-        const newCourses = await contract.getCourses(contentCreatorId);
-        console.log("Fetch Courses Call.....");
-        if (
-          retry &&
-          retries < MAX_FETCH_RETRIES &&
-          courses.length === newCourses.length
-        ) {
-          return setTimeout(
-            () => fetchCourses(true, retries + 1),
-            FETCH_RETRY_TIMEOUT
-          );
-        }
-        console.log("Init load courses");
-        setCourses(newCourses);
-      };
-    
-      //To fetch courses onload
-      useEffect(() => {
-        if (!contract) {
-          return;
-        }
+      console.log("we got the ID: " + tb_contentCreatorId)
+      const newCourses = await contract.getCourses(tb_contentCreatorId);
+      console.log("Fetch Courses Call.....");
+      if (
+        retry &&
+        retries < MAX_FETCH_RETRIES &&
+        courses.length === newCourses.length
+      ) {
+        return setTimeout(
+          () => fetchCourses(true, retries + 1),
+          FETCH_RETRY_TIMEOUT
+        );
+      }
+      console.log("Init load courses");
+      setCourses(newCourses);
+    };
+  
+    //To fetch courses onload
+    useEffect(() => {
+      if (!contract) {
+        return;
+      }
 
-        fetchCourses();
-      }, [contract]);
+      fetchCourses();
+    }, [contract]);
 
-      const cardStyles = useStyles();
+    const cardStyles = useStyles();
 
   return (
     <ApexChartWrapper>
@@ -192,8 +192,7 @@ const ContentCreatorCourses = () => {
         <Grid item xs={12} md={3}>
             <AddNewCourseForm contentCreatorId={contentCreatorId} 
                                 open={open} 
-                                onClose={() => 
-                                setOpen(false)} 
+                                onClose={() => setOpen(false)} 
                                 onAdd={() => fetchCourses(true)} />         
         </Grid>
     </ApexChartWrapper>

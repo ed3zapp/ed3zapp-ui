@@ -1,6 +1,8 @@
 import {connect, ReadQueryResult, resultsToObjects } from  "@tableland/sdk"
-import { Wallet, providers, ethers } from 'ethers'
+import { ethers } from 'ethers'
 import { UserType } from "../store"
+import { format } from 'react-string-format';
+import { db_sql_properties } from '../../configs/application-properties';
 
 export enum TABLE_TYPE {
   USERS = 1,
@@ -40,19 +42,23 @@ export function useTableland() {
     const tableland = await getConnection(provider);
 
     startTime = Math.floor(Date.now());
-    const queryResult1 = await tableland.write(`DELETE FROM ${TableName_Users};`);
+    const queryResult1 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_Users));
+                          //{ skipConfirm: true });
+
     console.log("test queryResult1: " + validate_txhash(queryResult1.hash))
     endTime = Math.floor(Date.now());
     console.log("Time to delete " + TableName_Users + ": " + (endTime - startTime));
 
     startTime = Math.floor(Date.now());
-    const queryResult2 = await tableland.write(`DELETE FROM ${TableName_ContentCreators};`);
+    const queryResult2 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_ContentCreators));
+                          //{ skipConfirm: true });      
     console.log("test queryResult2: " + validate_txhash(queryResult2.hash))
     endTime = Math.floor(Date.now());
     console.log("Time to delete " + TableName_ContentCreators + ": " + (endTime - startTime));
 
     startTime = Math.floor(Date.now());
-    const queryResult3 = await tableland.write(`DELETE FROM ${TableName_Learners};`);
+    const queryResult3 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_Learners));
+                          //{ skipConfirm: true });
     console.log("test queryResult3: " + validate_txhash(queryResult3.hash))
     endTime = Math.floor(Date.now());
     console.log("Time to delete " + TableName_Learners + ": " + (endTime - startTime));
@@ -62,47 +68,80 @@ export function useTableland() {
 
   async function getConnection(provider : ethers.providers.Web3Provider) {
     if (dbConnection == null) {
-      console.log("connection is null")
+      console.log("Initializing tableland connection...")
       const startTime = Math.floor(Date.now());
       dbConnection = connect({ network: "testnet", chain: "polygon-mumbai", signer: provider.getSigner() });
       const endTime = Math.floor(Date.now());
-      console.log("Time to get connection: " + (endTime - startTime));
+      console.log("Time to get tableland connection: " + (endTime - startTime));
     }
-      console.log("resuing connection")
+      console.log("Reusing tableland connection")
       return dbConnection;
     }
 
   // New user type data entry
   const userTableEntry = async (provider : ethers.providers.Web3Provider, data: TableType_Users) => {
     const tableland = await getConnection(provider);
-    const queryResult = await tableland.write(`INSERT INTO ${TableName_Users} (userAddress, userType, creationDate) VALUES ('${data.userAddress}', ${data.userType}, datetime('now', 'localtime'));`);
+    let startTime = Math.floor(Date.now());
+    const queryResult = await tableland.write(format(db_sql_properties.sql_user_table_entries, TableName_Users, 
+                          data.userAddress, data.userType));
+                          //{ skipConfirm: true });
+    let endTime = Math.floor(Date.now());
+    console.log("userTableLand: entry time: " + (endTime - startTime));
+
     return validate_txhash(queryResult.hash)
   }
 
   // New content creator user details data entry
   const contentCreatorTableEntry = async (provider : ethers.providers.Web3Provider, data: TableType_ContentCreators) => {
     const tableland = await getConnection(provider);
-    const queryResult = await tableland.write(`INSERT INTO ${TableName_ContentCreators} (userName, userAddress, userBio, creationDate) VALUES ('${data.userName}', '${data.userAddress}', '${data.userBio}', datetime('now', 'localtime'));`);
+    let startTime = Math.floor(Date.now());
+    const queryResult = await tableland.write(format(db_sql_properties.sql_cc_table_entries, TableName_ContentCreators, 
+                          data.userName, data.userAddress, data.userBio));
+                          //{ skipConfirm: true });
+    let endTime = Math.floor(Date.now());
+    console.log("userTableLand: contentCreatorTableEntry: entry time: " + (endTime - startTime));
+
     return validate_txhash(queryResult.hash)
   }
 
   // New learner user details data entry
   const learnerTableEntry = async (provider : ethers.providers.Web3Provider, data: TableType_Learners) => {
     const tableland = await getConnection(provider);
-    const queryResult = await tableland.write(`INSERT INTO ${TableName_Learners} (userName, userAddress, userBio, creationDate) VALUES ('${data.userName}', '${data.userAddress}', '${data.userBio}', datetime('now', 'localtime'));`);
+    let startTime = Math.floor(Date.now());
+    const queryResult = await tableland.write(format(db_sql_properties.sql_learners_table_entries, TableName_Learners, 
+                          data.userName, data.userAddress, data.userBio));
+                          //{ skipConfirm: true });
+
+    let endTime = Math.floor(Date.now());
+    console.log("userTableLand: learnerTableEntry: entry time: " + (endTime - startTime));
+
+    return validate_txhash(queryResult.hash)
+  }
+
+  // UpdateTest
+  const updateTest = async (provider : ethers.providers.Web3Provider) => {
+    const tableland = await getConnection(provider);
+    let startTime = Math.floor(Date.now());
+    const queryResult = await tableland.write(`UPDATE ${TableName_ContentCreators} SET userName='ContentCreatorRam' WHERE userAddress='0x89A17440742943FE46dfa1894033D32F3B61e515';`,);
+                          //{ skipConfirm: true });
+
+    let endTime = Math.floor(Date.now());
+    console.log("updateTest: update time: " + (endTime - startTime));
+
     return validate_txhash(queryResult.hash)
   }
 
   // Check if user already exists
   const isUserExists = async (provider : ethers.providers.Web3Provider, address: string) => {
     const tableland = await getConnection(provider);
+    //const queryResult = await tableland.read(format(db_sql_properties.sql_get_user_type, TableName_Users, address));
+    console.log("xxxxxx: " + `SELECT userType FROM ${TableName_Users} WHERE userAddress='${address}';`)
     const queryResult = await tableland.read(`SELECT userType FROM ${TableName_Users} WHERE userAddress='${address}';`);
 
-    console.log("qHash:" + queryResult.hash)
-    console.log("queryResult.rows: " + queryResult.rows)
-    console.log("queryResult.rows.length: " + queryResult.rows.length)
-    console.log("isUserExists table contents: " + showTableValuesInConsole(queryResult))
-    if (queryResult.rows.length > 0) {
+    console.log("query resultsssss: " + queryResult)
+    console.log("query resultsssss: " + queryResult.rows)
+    if (!queryResult && !queryResult.rows && queryResult.rows.length > 0) {
+      console.log("isUserExists table contents: " + showTableValuesInConsole(queryResult))
       return true;
     }
 
@@ -112,7 +151,7 @@ export function useTableland() {
   // Get content creator Id
   const getContentCreatorId = async (provider : ethers.providers.Web3Provider, address: string) => {
     const tableland = await getConnection(provider);
-    const queryResult = await tableland.read(`SELECT id FROM ${TableName_ContentCreators} WHERE userAddress='${address}';`);
+    const queryResult = await tableland.read(format(db_sql_properties.sql_get_cc_id, TableName_ContentCreators, address));
     const entries = resultsToObjects(queryResult);
 
     if (entries.length == 1) {
@@ -127,7 +166,7 @@ export function useTableland() {
   // Get user type
   const getUserType = async (provider : ethers.providers.Web3Provider, address: string) => {
     const tableland = await getConnection(provider);
-    const queryResult = await tableland.read(`SELECT userType FROM ${TableName_Users} WHERE userAddress='${address}';`);
+    const queryResult = await tableland.read(format(db_sql_properties.sql_get_user_type, TableName_Users, address));
     const entries = resultsToObjects(queryResult);
 
     console.log("getUserType table contents: " + showTableValuesInConsole(queryResult))
@@ -166,10 +205,12 @@ export function useTableland() {
         console.log("userTableLand: Time to create connection: " + (endTime - startTime));
 
         startTime = Math.floor(Date.now());
-        const queryResult = await tableland.write(`GRANT INSERT,UPDATE ON ${tableName} TO '${address}';`);
+        const queryResult = await tableland.write(format(db_sql_properties.sql_grant_access, tableName, address)); 
+                            //{ skipConfirm: true });
         console.log("Grant provided for new user: " + address + " for table: " + tableName)
         endTime = Math.floor(Date.now());
         console.log("userTableLand: Time to provide grant to users: " + (endTime - startTime));
+        console.log("userTableLand: HASH: " + (queryResult.hash));
 
         return validate_txhash(queryResult.hash)
     } catch (err) {
@@ -203,6 +244,7 @@ export function useTableland() {
             contentCreatorTableEntry,
             learnerTableEntry,
             testDeleteAllTableEntries,
-            getContentCreatorId
+            getContentCreatorId,
+            updateTest
           }
 }

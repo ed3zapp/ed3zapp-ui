@@ -75,7 +75,7 @@ const ContentCreatorEnrollForm: React.FC<IProps> = ({open2, onClose}) => {
         });
         console.log("New Content Creator details entry to table status: " + ccDetailsEntryResult)
         endTime = Math.floor(Date.now());
-        console.log("CCEnrollForm: Time to insert learners: " + (endTime - startTime));
+        console.log("CCEnrollForm: Time to insert cc: " + (endTime - startTime));
         
         // Get content creator id
         startTime = Math.floor(Date.now());

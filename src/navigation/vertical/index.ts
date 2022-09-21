@@ -38,7 +38,7 @@ const navigation = ( userType: number ): VerticalNavItemsType => {
         {
           title: 'Modules',
           icon: BookOpenBlankVariant,
-          path: '/'
+          path: '/contentCreatorCourseModules'
         }
       ]
     case UserType.LEARNER:

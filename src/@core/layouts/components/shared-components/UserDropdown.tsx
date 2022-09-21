@@ -66,16 +66,16 @@ const UserDropdown = () => {
 
   const [username, setUsername] = useState("");
   const fetchUsername = async () => {
-    const user_name = await contract.getUserName(wallet);
-    console.log("Username: " + user_name);
-    setUsername(user_name);
+    //const user_name = await contract.getUserName(wallet);
+    //console.log("Username: " + user_name);
+    setUsername("TestUser");
   };
 
   const [userType, setUserType] = useState("");
   const fetchUserType = async () => {
-    const result = await contract.getUserType(wallet);
-    console.log("Usertype: " + result);
-    setUserType(result);
+    //const result = await contract.getUserType(wallet);
+    //console.log("Usertype: " + result);
+    setUserType("1");
   }
 
   const styles = {
