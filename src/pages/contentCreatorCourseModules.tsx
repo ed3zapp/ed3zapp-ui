@@ -39,15 +39,14 @@ const ContentCreatorCourseModules: React.FC<IProps> = ({ courseId }) => {
                     }}
                 />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} >
               <Box sx={{ display: 'flex', 
                           flexWrap: 'wrap',
-                          alignItems: 'center',
-                          justifyContent: 'space-between' }}>
-                <Box sx={{ mr: 2, mb: 1, display: 'flex', flexDirection: 'column' }}>
+                          alignItems: 'center'}}>
+                <Box sx={{ mr: 2, mb: 1, width: 200, display: 'flex', flexDirection: 'column' }}>
                   <FormControl fullWidth>
-                    <InputLabel>Select Course</InputLabel>
-                    <Select label='Country' defaultValue='USA'>
+                    <InputLabel variant="outlined">Select Course</InputLabel>
+                    <Select label='Country' defaultValue='USA' >
                       <MenuItem value='USA'>USA</MenuItem>
                       <MenuItem value='UK'>UK</MenuItem>
                       <MenuItem value='Australia'>Australia</MenuItem>
@@ -55,7 +54,7 @@ const ContentCreatorCourseModules: React.FC<IProps> = ({ courseId }) => {
                     </Select>
                   </FormControl>
                 </Box>
-                <Button variant='contained' sx={{ marginRight: 3.5 }}>
+                <Button variant='contained' >
                   Save Changes
                 </Button>
               </Box>

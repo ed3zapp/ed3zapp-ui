@@ -14,6 +14,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from 'mdi-material-ui/SendCircle';
 import CloseIcon from 'mdi-material-ui/CloseThick';
+import { useTableland } from "../../services/hooks/useTableland"
 
 interface IProps {
   contentCreatorId: number;
@@ -23,22 +24,37 @@ interface IProps {
 }
 
 const AddNewCourseForm: React.FC<IProps> = ({ contentCreatorId, open, onClose, onAdd }) => {
-  console.log("params: " + contentCreatorId + "," + open + ",")
   const {
-    state: { contract },
+    state: { contract, provider },
   } = useStore();
 
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [topic, setTopic] = useState("");
   const [price, setPrice] = useState(0);
+  const [rewards, setRewards] = useState(0);
   const [loading, setLoading] = useState(false);
+  const { ccCoursesTableEntry } = useTableland();
   
-  const createNewCourse = async (name: string, desc: string, price: number, topic: string) => {
+  const createNewCourse = async (name: string, desc: string, price: number, topic: string, rewards: number) => {
     try {
+      // Fetch courses
+      console.log("AddNewCourseForm: we got the ID: " + contentCreatorId)
+      console.log("Create Course Call.....");
       setLoading(true)
-      console.log("AddNewCourseForm: " + contentCreatorId +","+ name +","+ desc +","+ price +","+ topic)
-      await contract.createCourse(contentCreatorId, name, desc, price, topic, (new Date()).getTime());
+      const startTime = Math.floor(Date.now());
+      //ccId, name, description, topic, price, rewards, creationDate
+      const isCourseCreated = await ccCoursesTableEntry(provider, {
+        ccId: contentCreatorId,
+        courseName: name,
+        courseDescription: desc,
+        price: price,
+        topic: topic,
+        rewards: rewards
+      });
+      const endTime = Math.floor(Date.now());
+      console.log("AddNewCourseForm: createNewCourse: Time: " + (endTime - startTime));
+      console.log("Course created: " + isCourseCreated)
       onAdd();
       setLoading(false)
     } catch (error) {
@@ -70,6 +86,9 @@ const AddNewCourseForm: React.FC<IProps> = ({ contentCreatorId, open, onClose, o
                   <TextField fullWidth label='Price' onChange={(value) => setPrice(parseInt(value.currentTarget.value, 0))} />
                 </Grid>
                 <Grid item xs={12}>
+                  <TextField fullWidth label='Rewards' onChange={(value) => setRewards(parseInt(value.currentTarget.value, 0))} />
+                </Grid>
+                <Grid item xs={12}>
                   <Box  
                     sx={{
                       gap: 5,
@@ -82,12 +101,12 @@ const AddNewCourseForm: React.FC<IProps> = ({ contentCreatorId, open, onClose, o
                   <LoadingButton
                       type='submit'
                       size='large'
-                      onClick={() => createNewCourse(name, desc, price, topic)}
+                      onClick={() => createNewCourse(name, desc, price, topic, rewards)}
                       endIcon={<SendIcon />}
                       loading={loading}
                       loadingPosition="end"
                       variant="contained"
-                      disabled={!name || !desc|| !topic || !price}
+                      disabled={!name || !desc|| !topic || !price || !rewards}
                       >
                   Submit
                   </LoadingButton>

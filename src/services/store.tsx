@@ -96,6 +96,11 @@ async function loginUser(
   //console.log("Total time to delete tables: " + (endTime - startTime));
   //console.log("Test delete done!")
 
+  // Test- Create table
+  //const { createTableTest } = useTableland();
+  //const createQueryResult = await createTableTest(provider);
+  //console.log("Test create done: " + createQueryResult)
+
   // Check if user is already registered user
   startTime = Math.floor(Date.now());
   const { isUserExists, getUserType } = useTableland();

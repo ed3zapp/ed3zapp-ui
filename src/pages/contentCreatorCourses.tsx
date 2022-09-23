@@ -1,3 +1,5 @@
+import { ReadQueryResult } from  "@tableland/sdk"
+
 // ** MUI Imports
 import Color from 'color';
 import Grid from '@mui/material/Grid'
@@ -13,7 +15,7 @@ import Divider from '@mui/material/Divider'
 
 // ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
-import { useStore } from 'src/services/store'
+import { useStore, UserType } from 'src/services/store'
 import { useEffect, useState } from 'react'
 import AddNewCourseForm from 'src/views/form-layouts/AddNewCourseForm'
 import { makeStyles } from '@material-ui/core/styles';
@@ -46,59 +48,90 @@ const useStyles = makeStyles(() => ({
 const ContentCreatorCourses = () => {
     const router = useRouter();
     const {
-        state: { provider, wallet, contract },
+        state: { provider, wallet },
       } = useStore();
 
-    const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState({
+      columns: [],
+      rows: [],
+    });
     const [open, setOpen] = useState(false);
     const [contentCreatorId, setContentCreatorId] = useState(0);
-    const { getContentCreatorId } = useTableland();
+    const { getContentCreatorId, getUserType, getContentCreatorCourses } = useTableland();
+    const [isContentCreator, setIsContentCreator] = useState(false);
 
     const fetchCourses = async (retry = false, retries = 0) => {
       const id = parseInt(router.query.contentCreatorId as string, 0);
       console.log("ContentCreatorCourses: ContentCreatorId from router: " + id)
       
-      let tb_contentCreatorId: number;
-      if(isNaN(id)) {
-        console.log("ContentCreatorCourses: Fetching Id from table...")
+      // check type of user 
+      let startTime = Math.floor(Date.now());
+      const userType = await getUserType(provider, wallet);
 
-        // Get content creator id
-        const startTime = Math.floor(Date.now());
-        tb_contentCreatorId = await getContentCreatorId(provider, wallet);
-        console.log("ContentCreatorCourses: Content creator ID: " + tb_contentCreatorId)
-        const endTime = Math.floor(Date.now());
-        console.log("ContentCreatorCourses: Time to get content creator ID: " + (endTime - startTime));
-        setContentCreatorId(tb_contentCreatorId);
-      } else {
-        tb_contentCreatorId = id;
-        setContentCreatorId(id);
-      }
+      let isUserCC = false;
+      if (userType == UserType.CONTENT_CREATOR) {
+        setIsContentCreator(true);
+        isUserCC = true;
+      } 
 
-      console.log("we got the ID: " + tb_contentCreatorId)
-      const newCourses = await contract.getCourses(tb_contentCreatorId);
-      console.log("Fetch Courses Call.....");
-      if (
-        retry &&
-        retries < MAX_FETCH_RETRIES &&
-        courses.length === newCourses.length
-      ) {
-        return setTimeout(
-          () => fetchCourses(true, retries + 1),
-          FETCH_RETRY_TIMEOUT
-        );
+      let endTime = Math.floor(Date.now());
+      console.log("Time to get user type: " + (endTime - startTime));
+
+      if (isUserCC) {
+        let tb_contentCreatorId: number;
+        if(isNaN(id)) {
+          console.log("ContentCreatorCourses: Fetching Id from table...")
+
+          // Get content creator id
+          startTime = Math.floor(Date.now());
+          tb_contentCreatorId = await getContentCreatorId(provider, wallet);
+          console.log("ContentCreatorCourses: Content creator ID: " + tb_contentCreatorId)
+          endTime = Math.floor(Date.now());
+          console.log("ContentCreatorCourses: Time to get content creator ID: " + (endTime - startTime));
+          setContentCreatorId(tb_contentCreatorId);
+        } else {
+          tb_contentCreatorId = id;
+          setContentCreatorId(id);
+        }
+
+        // Fetch courses
+        console.log("we got the ID: " + tb_contentCreatorId)
+        console.log("Fetch Courses Call.....");
+        startTime = Math.floor(Date.now());
+        const newCourses = await getContentCreatorCourses(provider, tb_contentCreatorId);
+        endTime = Math.floor(Date.now());
+        console.log("ContentCreatorCourses: Time to get content creator courses: " + (endTime - startTime));
+
+
+        const coursesLen = courses !== null ? courses.rows.length : 0;
+        const newCoursesLen = newCourses !== null ? newCourses.rows.length : 0;
+        console.log("coursesLen: " + coursesLen)
+        console.log("newCoursesLen: " + newCoursesLen)
+
+        if (
+          retry &&
+          retries < MAX_FETCH_RETRIES &&
+          coursesLen === newCoursesLen
+        ) {
+          return setTimeout(
+            () => fetchCourses(true, retries + 1),
+            FETCH_RETRY_TIMEOUT
+          );
+        }
+        console.log("Init load courses");
+        setCourses(newCourses);
+        console.log("newCourses.rows.length: " + newCourses.rows.length)
       }
-      console.log("Init load courses");
-      setCourses(newCourses);
     };
   
     //To fetch courses onload
     useEffect(() => {
-      if (!contract) {
+      if (!provider) {
         return;
       }
 
       fetchCourses();
-    }, [contract]);
+    }, [provider]);
 
     const cardStyles = useStyles();
 
@@ -121,73 +154,95 @@ const ContentCreatorCourses = () => {
                     }}
                 />
             </Grid>
-            {courses.map((course) => {
-              const randRating = Math.floor(Math.random() * (5 - 2 + 1)) + 2;
-              const randReview = Math.floor(Math.random() * (40 - 5 + 1)) + 5;
+            {isContentCreator ?
+             <>
+              {courses !== null && courses.rows.map((data) => {
+                const randRating = Math.floor(Math.random() * (5 - 2 + 1)) + 2;
+                const randReview = Math.floor(Math.random() * (40 - 5 + 1)) + 5;
 
-              return ((course[0] != 0) &&
+                return ((data[0] != -1) &&
                   <Grid item xs={12} md={3}>
-                      <CardActionArea className={cardStyles.actionArea}>
-                          <Card classes={cardStyles.card}>
-                              <CardMedia sx={{ height: '9.375rem' }} image='/images/cards/courseLogo.jpg' />
-                              <CardContent sx={{ padding: theme => `${theme.spacing(3, 5.25, 4)} !important` }}>
-                                  <Typography variant='h6' sx={{ marginBottom: 2 }}>
-                                  {course[2]}
-                                  </Typography>
-                                  <Box sx={{ mb: 4.75, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                                      <Rating readOnly value={randRating} name='read-only' sx={{ marginRight: 2 }} />
-                                      <Typography variant='body2'>{randRating} Star | {randReview} reviews</Typography>
+                    <CardActionArea className={cardStyles.actionArea}>
+                        <Card classes={cardStyles.card}>
+                            <CardMedia sx={{ height: '9.375rem' }} image='/images/cards/courseLogo.jpg' />
+                            <CardContent sx={{ padding: theme => `${theme.spacing(3, 5.25, 4)} !important` }}>
+                                <Typography variant='h6' sx={{ marginBottom: 2 }}>
+                                {data[2]}
+                                </Typography>
+                                <Box sx={{ mb: 4.75, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                                    <Rating readOnly value={randRating} name='read-only' sx={{ marginRight: 2 }} />
+                                    <Typography variant='body2'>{randRating} Star | {randReview} reviews</Typography>
+                                </Box>
+                                <Typography sx={{ fontWeight: 'bold' }}>
+                                  Description:{' '}
+                                  <Box component='span' sx={{ fontWeight: 500 }}>
+                                    {data[3]}
                                   </Box>
-                                  <Typography sx={{ fontWeight: 'bold' }}>
-                                    Description:{' '}
-                                    <Box component='span' sx={{ fontWeight: 500 }}>
-                                      {course[3]}
-                                    </Box>
-                                  </Typography>
-                                  <Typography sx={{ fontWeight: 'bold' }}>
-                                    Topic:{' '}
-                                    <Box component='span' sx={{ fontWeight: 500 }}>
-                                      {course[5]}
-                                    </Box>
-                                  </Typography>
-                                  <Typography sx={{ fontWeight: 'bold' }}>
-                                    Price:{' '}
-                                    <Box component='span' sx={{ fontWeight: 500 }}>
-                                      {course[4]}
-                                    </Box>
-                                  </Typography>
-                              </CardContent>
-                          </Card>
-                      </CardActionArea>
-                  </Grid>
-            );
-            })}
-            <Grid item xs={12} md={3}>
-                <CardActionArea className={cardStyles.actionArea}>
-                    <Card classes={cardStyles.card}>
-                    <CardContent
-                        sx={{
-                        display: 'flex',
-                        textAlign: 'center',
-                        alignItems: 'center',
-                        flexDirection: 'column',
-                        height: '16.625rem',
-                        padding: theme => `${theme.spacing(9.75, 5, 9.25)} !important`
-                        }}
-                        onClick={() => setOpen(true)}
-                    >
-                            <Avatar
-                                sx={{ width: 50, height: 50, marginBottom: 2.25, color: 'common.white', backgroundColor: 'primary.main' }}
-                                >
-                                <PlusCircle />
-                            </Avatar>
-                            <Typography variant='h6' sx={{ marginBottom: 2.75 }}>
-                                Add New Course
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </CardActionArea>
-            </Grid>
+                                </Typography>
+                                <Typography sx={{ fontWeight: 'bold' }}>
+                                  Topic:{' '}
+                                  <Box component='span' sx={{ fontWeight: 500 }}>
+                                    {data[4]}
+                                  </Box>
+                                </Typography>
+                                <Typography sx={{ fontWeight: 'bold' }}>
+                                  Price:{' '}
+                                  <Box component='span' sx={{ fontWeight: 500 }}>
+                                    {data[5]}
+                                  </Box>
+                                </Typography>
+                                <Typography sx={{ fontWeight: 'bold' }}>
+                                  Rewards:{' '}
+                                  <Box component='span' sx={{ fontWeight: 500 }}>
+                                    {data[6]}
+                                  </Box>
+                                </Typography>
+                                <Typography sx={{ fontWeight: 'bold' }}>
+                                  Creation Date:{' '}
+                                  <Box component='span' sx={{ fontWeight: 500 }}>
+                                    {data[8]}
+                                  </Box>
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </CardActionArea>
+                </Grid>
+                  )
+              })}
+              <Grid item xs={12} md={3}>
+                  <CardActionArea className={cardStyles.actionArea}>
+                      <Card classes={cardStyles.card}>
+                      <CardContent
+                          sx={{
+                          display: 'flex',
+                          textAlign: 'center',
+                          alignItems: 'center',
+                          flexDirection: 'column',
+                          height: '16.625rem',
+                          padding: theme => `${theme.spacing(9.75, 5, 9.25)} !important`
+                          }}
+                          onClick={() => setOpen(true)}
+                      >
+                              <Avatar
+                                  sx={{ width: 50, height: 50, marginBottom: 2.25, color: 'common.white', backgroundColor: 'primary.main' }}
+                                  >
+                                  <PlusCircle />
+                              </Avatar>
+                              <Typography variant='h6' sx={{ marginBottom: 2.75 }}>
+                                  Add New Course
+                              </Typography>
+                          </CardContent>
+                      </Card>
+                  </CardActionArea>
+              </Grid>
+             </> 
+             : 
+             <>
+              <Typography variant='caption' sx={{ color: 'text.disabled' }}>
+                This section is only for Content Creators
+              </Typography>
+             </>}
+            
         </Grid>
         <Grid item xs={12} md={3}>
             <AddNewCourseForm contentCreatorId={contentCreatorId} 

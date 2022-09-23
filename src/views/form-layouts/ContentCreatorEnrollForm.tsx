@@ -64,7 +64,7 @@ const ContentCreatorEnrollForm: React.FC<IProps> = ({open2, onClose}) => {
         const ccAccessGrantResult = await grantUserAccessToTable(provider, wallet, TABLE_TYPE.CONTENT_CREATORS);
         console.log("Content Creators table access grant to user status: " + ccAccessGrantResult)
         endTime = Math.floor(Date.now());
-        console.log("CCEnrollForm: Time to provide grant to learners: " + (endTime - startTime));
+        console.log("CCEnrollForm: Time to provide grant to user: " + (endTime - startTime));
 
         // Content Creator details entry
         startTime = Math.floor(Date.now());
@@ -77,6 +77,13 @@ const ContentCreatorEnrollForm: React.FC<IProps> = ({open2, onClose}) => {
         endTime = Math.floor(Date.now());
         console.log("CCEnrollForm: Time to insert cc: " + (endTime - startTime));
         
+        // Grant access to cc_courses table
+        startTime = Math.floor(Date.now());
+        const ccCoursesAccessGrantResult = await grantUserAccessToTable(provider, wallet, TABLE_TYPE.CC_COURSES);
+        console.log("Content Creators table access grant to cc_courses status: " + ccCoursesAccessGrantResult)
+        endTime = Math.floor(Date.now());
+        console.log("CCEnrollForm: Time to provide grant to cc_courses: " + (endTime - startTime));
+
         // Get content creator id
         startTime = Math.floor(Date.now());
         const tb_contentCreatorId = await getContentCreatorId(provider, wallet);

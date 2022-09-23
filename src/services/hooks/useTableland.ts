@@ -8,6 +8,7 @@ export enum TABLE_TYPE {
   USERS = 1,
   LEARNERS = 2,
   CONTENT_CREATORS = 3,
+  CC_COURSES = 4
 }
 
 // Table - users
@@ -32,6 +33,18 @@ export type TableType_Learners = {
   userAddress: string,
   userBio: string
 }
+
+// Table - cc_courses
+export const TableName_CC_Courses = 'cc_courses_80001_2665' // Polygon
+export type TableType_CC_Courses = {
+  ccId: number,
+  courseName: string,
+  courseDescription: string,
+  topic: string,
+  price: number,
+  rewards: number
+}
+
 export let dbConnection = null;
 export function useTableland() {
 
@@ -42,23 +55,23 @@ export function useTableland() {
     const tableland = await getConnection(provider);
 
     startTime = Math.floor(Date.now());
-    const queryResult1 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_Users));
-                          //{ skipConfirm: true });
+    const queryResult1 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_Users),
+                          { skipConfirm: true });
 
     console.log("test queryResult1: " + validate_txhash(queryResult1.hash))
     endTime = Math.floor(Date.now());
     console.log("Time to delete " + TableName_Users + ": " + (endTime - startTime));
 
     startTime = Math.floor(Date.now());
-    const queryResult2 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_ContentCreators));
-                          //{ skipConfirm: true });      
+    const queryResult2 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_ContentCreators),
+                          { skipConfirm: true });      
     console.log("test queryResult2: " + validate_txhash(queryResult2.hash))
     endTime = Math.floor(Date.now());
     console.log("Time to delete " + TableName_ContentCreators + ": " + (endTime - startTime));
 
     startTime = Math.floor(Date.now());
-    const queryResult3 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_Learners));
-                          //{ skipConfirm: true });
+    const queryResult3 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_Learners),
+                          { skipConfirm: true });
     console.log("test queryResult3: " + validate_txhash(queryResult3.hash))
     endTime = Math.floor(Date.now());
     console.log("Time to delete " + TableName_Learners + ": " + (endTime - startTime));
@@ -83,8 +96,8 @@ export function useTableland() {
     const tableland = await getConnection(provider);
     let startTime = Math.floor(Date.now());
     const queryResult = await tableland.write(format(db_sql_properties.sql_user_table_entries, TableName_Users, 
-                          data.userAddress, data.userType));
-                          //{ skipConfirm: true });
+                          data.userAddress, data.userType),
+                          { skipConfirm: true });
     let endTime = Math.floor(Date.now());
     console.log("userTableLand: entry time: " + (endTime - startTime));
 
@@ -96,8 +109,8 @@ export function useTableland() {
     const tableland = await getConnection(provider);
     let startTime = Math.floor(Date.now());
     const queryResult = await tableland.write(format(db_sql_properties.sql_cc_table_entries, TableName_ContentCreators, 
-                          data.userName, data.userAddress, data.userBio));
-                          //{ skipConfirm: true });
+                          data.userName, data.userAddress, data.userBio),
+                          { skipConfirm: true });
     let endTime = Math.floor(Date.now());
     console.log("userTableLand: contentCreatorTableEntry: entry time: " + (endTime - startTime));
 
@@ -109,8 +122,8 @@ export function useTableland() {
     const tableland = await getConnection(provider);
     let startTime = Math.floor(Date.now());
     const queryResult = await tableland.write(format(db_sql_properties.sql_learners_table_entries, TableName_Learners, 
-                          data.userName, data.userAddress, data.userBio));
-                          //{ skipConfirm: true });
+                          data.userName, data.userAddress, data.userBio),
+                          { skipConfirm: true });
 
     let endTime = Math.floor(Date.now());
     console.log("userTableLand: learnerTableEntry: entry time: " + (endTime - startTime));
@@ -118,12 +131,38 @@ export function useTableland() {
     return validate_txhash(queryResult.hash)
   }
 
+  // Content creator courses data entry
+  const ccCoursesTableEntry = async (provider : ethers.providers.Web3Provider, data: TableType_CC_Courses) => {
+    const tableland = await getConnection(provider);
+    let startTime = Math.floor(Date.now());
+    const queryResult = await tableland.write(format(db_sql_properties.sql_cc_courses_table_entries, TableName_CC_Courses, 
+                          data.ccId, data.courseName, data.courseDescription, data.topic, data.price, data.rewards),
+                          { skipConfirm: true });
+
+    let endTime = Math.floor(Date.now());
+    console.log("userTableLand: ccCoursesTableEntry: entry time: " + (endTime - startTime));
+
+    return validate_txhash(queryResult.hash)
+  }
+
+  // Get content creator courses
+  const getContentCreatorCourses = async (provider : ethers.providers.Web3Provider, contentCreatorId: number) => {
+    const tableland = await getConnection(provider);
+    let startTime = Math.floor(Date.now());
+    const queryResult = await tableland.read(format(db_sql_properties.sql_get_cc_courses, TableName_CC_Courses, contentCreatorId));
+
+    let endTime = Math.floor(Date.now());
+    console.log("userTableLand: getContentCreatorCourses: entry time: " + (endTime - startTime));
+
+    return queryResult
+  }
+
   // UpdateTest
   const updateTest = async (provider : ethers.providers.Web3Provider) => {
     const tableland = await getConnection(provider);
     let startTime = Math.floor(Date.now());
-    const queryResult = await tableland.write(`UPDATE ${TableName_ContentCreators} SET userName='ContentCreatorRam' WHERE userAddress='0x89A17440742943FE46dfa1894033D32F3B61e515';`,);
-                          //{ skipConfirm: true });
+    const queryResult = await tableland.write(`UPDATE ${TableName_ContentCreators} SET userName='ContentCreatorRam' WHERE userAddress='0x89A17440742943FE46dfa1894033D32F3B61e515';`,
+                          { skipConfirm: true });
 
     let endTime = Math.floor(Date.now());
     console.log("updateTest: update time: " + (endTime - startTime));
@@ -134,13 +173,9 @@ export function useTableland() {
   // Check if user already exists
   const isUserExists = async (provider : ethers.providers.Web3Provider, address: string) => {
     const tableland = await getConnection(provider);
-    //const queryResult = await tableland.read(format(db_sql_properties.sql_get_user_type, TableName_Users, address));
-    console.log("xxxxxx: " + `SELECT userType FROM ${TableName_Users} WHERE userAddress='${address}';`)
-    const queryResult = await tableland.read(`SELECT userType FROM ${TableName_Users} WHERE userAddress='${address}';`);
+    const queryResult = await tableland.read(format(db_sql_properties.sql_get_user_type, TableName_Users, address));
 
-    console.log("query resultsssss: " + queryResult)
-    console.log("query resultsssss: " + queryResult.rows)
-    if (!queryResult && !queryResult.rows && queryResult.rows.length > 0) {
+    if (queryResult.rows.length > 0) {
       console.log("isUserExists table contents: " + showTableValuesInConsole(queryResult))
       return true;
     }
@@ -189,6 +224,8 @@ export function useTableland() {
           tableName = TableName_Learners;
         } else if (tableType == TABLE_TYPE.CONTENT_CREATORS) {
           tableName = TableName_ContentCreators;
+        } else if (tableType == TABLE_TYPE.CC_COURSES) {
+          tableName = TableName_CC_Courses;
         }
 
         let startTime = Math.floor(Date.now()); // in seconds
@@ -205,8 +242,8 @@ export function useTableland() {
         console.log("userTableLand: Time to create connection: " + (endTime - startTime));
 
         startTime = Math.floor(Date.now());
-        const queryResult = await tableland.write(format(db_sql_properties.sql_grant_access, tableName, address)); 
-                            //{ skipConfirm: true });
+        const queryResult = await tableland.write(format(db_sql_properties.sql_grant_access, tableName, address),
+                            { skipConfirm: true });
         console.log("Grant provided for new user: " + address + " for table: " + tableName)
         endTime = Math.floor(Date.now());
         console.log("userTableLand: Time to provide grant to users: " + (endTime - startTime));
@@ -217,6 +254,18 @@ export function useTableland() {
         console.log("Error providing table access for user: " + address + " : for table: " + tableName + " : " + err.message)
     }
     return false;
+  }
+
+  const createTableTest = async (provider : ethers.providers.Web3Provider) => {
+    const tableland = await getConnection(provider);
+
+    let startTime = Math.floor(Date.now());
+    const queryResult = await tableland.create(`id INTEGER PRIMARY KEY, ccId INTEGER, name TEXT, description TEXT, topic TEXT, price INTEGER, rewards INTEGER, totalRating INTEGER, ratingCount INTEGER, creationDate TEXT`, {
+      prefix: `cc_courses`
+    }); 
+    let endTime = Math.floor(Date.now());
+    console.log("createTableTest: Time to create table: " + (endTime - startTime));
+    return queryResult;
   }
 
   // Validate to check if transaction hash pattern is valid
@@ -245,6 +294,9 @@ export function useTableland() {
             learnerTableEntry,
             testDeleteAllTableEntries,
             getContentCreatorId,
-            updateTest
+            ccCoursesTableEntry,
+            getContentCreatorCourses,
+            updateTest,
+            createTableTest
           }
 }

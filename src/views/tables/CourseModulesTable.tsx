@@ -1,16 +1,10 @@
 // ** React Imports
-import { useState } from 'react'
-
-import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
-import Divider from '@mui/material/Divider'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-
-
+import { Fragment, useState } from 'react'
 
 // ** MUI Imports
 import CreateIcon from "@material-ui/icons/Create";
 import {
+  Alert, Paper, TableContainer,
     Box, Button, Snackbar, Table,
     TableBody, TableCell, TableHead, TableRow
 } from "@mui/material";
@@ -20,7 +14,6 @@ import DoneIcon from "@material-ui/icons/Done";
 import ClearIcon from "@material-ui/icons/Clear";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -46,17 +39,19 @@ const useStyles = makeStyles({
 
 const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
  
+  const currDate = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(Date.now());
   // Creating style object
   const classes = useStyles();
   
   // Defining a state named rows
   // which we can update by calling on setRows function
   const [rows, setRows] = useState([
-      { id: 1, firstname: "", lastname: "", city: "" },
+      { id: 1, courseName: "", courseDesc: "", videoURL: "", videoLength: "", questionnaireURL: "", maxAttempts: 0, rewardPrice: 0, rewardsValidity: 0, creationDate: currDate },
   ]);
 
   // Initial states
   const [open, setOpen] = useState(false);
+  const [openError, setOpenError] = useState(false);
   const [isEdit, setEdit] = useState(false);
   const [disable, setDisable] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -69,13 +64,20 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
       setOpen(false);
   };
 
+  const handleCloseError = (event, reason) => {
+    if (reason === "clickaway") {
+        return;
+    }
+    setOpenError(false);
+};
+
   // Function For adding new row object
   const handleAdd = () => {
       setRows([
           ...rows,
           {
-              id: rows.length + 1, firstname: "",
-              lastname: "", city: ""
+              id: rows.length + 1, courseName: "", courseDesc: "", videoURL: "", videoLength: "", 
+              questionnaireURL: "", maxAttempts: 0, rewardPrice: 0, rewardsValidity: 0, creationDate: currDate,
           },
       ]);
       setEdit(true);
@@ -88,13 +90,30 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
       setEdit(!isEdit);
   };
 
+  const [alertErrMessage, setAlertErrMessage] = useState("");
   // Function to handle save
   const handleSave = () => {
-      setEdit(!isEdit);
-      setRows(rows);
-      console.log("saved : ", rows);
-      setDisable(true);
-      setOpen(true);
+      let isError = false;
+
+      rows.map((row) => {
+        if (typeof row.courseName === "string" && row.courseName.trim().length === 0) {
+          setAlertErrMessage("Course name cannot be empty!");
+          isError = true;
+        } else if (typeof row.courseDesc === "string" && row.courseDesc.trim().length === 0) {
+          setAlertErrMessage("Course description cannot be empty!");
+          isError = true;
+        }
+      });
+
+      if (isError) {
+        setOpenError(true);
+      } else {
+        setEdit(!isEdit);
+        setRows(rows);
+        console.log("saved : ", rows);
+        setDisable(true);
+        setOpen(true);
+      }
   };
 
   // The handleInputChange handler can be set up to handle
@@ -130,198 +149,239 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
 
 
   return (
-    <ApexChartWrapper>
-        <Grid container spacing={6}>
-            <Grid item xs={12}>
-                <Typography variant='h5'>Course Modules</Typography>
-            </Grid>
-            <Grid item xs={12} sx={{ paddingBottom: 2, paddingTop: 2 }}>
-                <Divider
-                    textAlign='left'
-                    sx={{
-                    m: 0,
-                    width: '100%',
-                    lineHeight: 'normal',
-                    textTransform: 'uppercase',
-                    '&:before, &:after': { top: 7, transform: 'none' },
-                    '& .MuiDivider-wrapper': { px: 2.5, fontSize: '0.75rem', letterSpacing: '0.21px' }
-                    }}
-                />
-            </Grid>
-            <Grid item xs={12}>
-            <TableBody>
-                <Snackbar
-                  open={open}
-                  autoHideDuration={2000}
-                  onClose={handleClose}
-                  className={classes.snackbar}
-                >
-                  <></>
-                </Snackbar>
-                <Box margin={1}>
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <div>
-                      {isEdit ? (
-                        <div>
-                          <Button onClick={handleAdd}>
-                            <AddBoxIcon onClick={handleAdd} />
-                            ADD
-                          </Button>
-                          {rows.length !== 0 && (
-                            <div>
-                              {disable ? (
-                                <Button disabled variant="contained" onClick={handleSave}>
-                                  <DoneIcon />
-                                  SAVE
-                                </Button>
-                              ) : (
-                                <Button variant="contained" onClick={handleSave}>
-                                  <DoneIcon />
-                                  SAVE
-                                </Button>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        <div>
-                          <Button onClick={handleAdd}>
-                            <AddBoxIcon onClick={handleAdd} />
-                            ADD
-                          </Button>
-                          <Button variant="contained" onClick={handleEdit}>
-                            <CreateIcon />
-                            EDIT
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <TableRow  />
-            
-                  <Table
-                    className={classes.table}
-                    size="small"
-                    aria-label="a dense table"
-                  >
-                    <TableHead>
+
+      <TableContainer component={Paper}>
+          <Snackbar
+            open={open}
+            autoHideDuration={2000}
+            onClose={handleClose}
+            className={classes.snackbar}
+          >
+            <Alert onClose={() => handleClose} severity="success">
+              Record Saved Successfully!
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            open={openError}
+            autoHideDuration={4000}
+            onClose={handleCloseError}
+            className={classes.snackbar}
+          >
+            <Alert onClose={() => handleCloseError} severity="error">
+              {alertErrMessage}
+            </Alert>
+          </Snackbar>
+          <Box sx={{margin:1, display: "flex"}}>
+            {isEdit ? (
+              <>
+                <Button onClick={handleAdd}>
+                  <AddBoxIcon onClick={handleAdd} />
+                  ADD
+                </Button>
+                
+                {rows.length !== 0 && (
+                  <>
+                    {disable ? (
+                      <Button disabled  onClick={handleSave}>
+                        <DoneIcon />
+                        SAVE
+                      </Button>
+                    ) : (
+                      <Button  onClick={handleSave}>
+                        <DoneIcon />
+                        SAVE
+                      </Button>
+                    )}
+                    </>
+                )}
+                </>
+                
+            ) : (
+              <>
+                <Button onClick={handleAdd}>
+                  <AddBoxIcon onClick={handleAdd} />
+                  ADD
+                </Button>
+                <Button  onClick={handleEdit}>
+                  <CreateIcon />
+                  EDIT
+                </Button>
+              </>
+            )}
+          </Box>
+      
+          
+            <Table
+              className={classes.table}
+              size="small"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell>Course Name</TableCell>
+                  <TableCell>Course Description</TableCell>
+                  <TableCell>Video URL</TableCell>
+                  <TableCell>Video Length</TableCell>
+                  <TableCell>Questionnaire URL</TableCell>
+                  <TableCell>Max Attempts</TableCell>
+                  <TableCell>Reward Price</TableCell>
+                  <TableCell>Rewards Validity</TableCell>
+                  <TableCell>Creation Date</TableCell>
+                  <TableCell> </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row, i) => {
+                  return (
+                    <>
                       <TableRow>
-                        <TableCell>First Name</TableCell>
-                        <TableCell>Last Name</TableCell>
-                        <TableCell align="center">City</TableCell>
-                        <TableCell align="center"> </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.map((row, i) => {
-                        return (
-                          <div>
-                            <TableRow>
-                              {isEdit ? (
-                                <div>
-                                  <TableCell padding="none">
-                                    <input
-                                      value={row.firstname}
-                                      name="firstname"
-                                      onChange={(e) => handleInputChange(e, i)}
-                                    />
-                                  </TableCell>
-                                  <TableCell padding="none">
-                                    <input
-                                      value={row.lastname}
-                                      name="lastname"
-                                      onChange={(e) => handleInputChange(e, i)}
-                                    />
-                                  </TableCell>
-                                  <TableCell padding="none">
-                                    <select
-                                      style={{ width: "100px" }}
-                                      name="city"
-                                      value={row.city}
-                                      onChange={(e) => handleInputChange(e, i)}
-                                    >
-                                      <option value=""></option>
-                                      <option value="Karanja">Karanja</option>
-                                      <option value="Hingoli">Hingoli</option>
-                                      <option value="Bhandara">Bhandara</option>
-                                      <option value="Amaravati">Amaravati</option>
-                                      <option value="Pulgaon">Pulgaon</option>
-                                    </select>
-                                  </TableCell>
-                                </div>
-                              ) : (
-                                <div>
-                                  <TableCell component="th" scope="row">
-                                    {row.firstname}
-                                  </TableCell>
-                                  <TableCell component="th" scope="row">
-                                    {row.lastname}
-                                  </TableCell>
-                                  <TableCell component="th" scope="row" align="center">
-                                    {row.city}
-                                  </TableCell>
-                                  <TableCell
-                                    component="th"
-                                    scope="row"
-                                    align="center"
-                                  ></TableCell>
-                                </div>
-                              )}
-                              {isEdit ? (
-                                <Button className="mr10" onClick={handleConfirm}>
-                                  <ClearIcon />
-                                </Button>
-                              ) : (
-                                <Button className="mr10" onClick={handleConfirm}>
-                                  <DeleteOutlineIcon />
-                                </Button>
-                              )}
-                              {showConfirm && (
-                                <div>
-                                  <Dialog
-                                    open={showConfirm}
-                                    onClose={handleNo}
-                                    aria-labelledby="alert-dialog-title"
-                                    aria-describedby="alert-dialog-description"
+                        {isEdit ? (
+                          <>
+                            <TableCell padding="none">
+                              <input
+                                value={row.courseName}
+                                name="courseName"
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                            </TableCell>
+                            <TableCell padding="none">
+                              <input
+                                value={row.courseDesc}
+                                name="courseDesc"
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                            </TableCell>
+                            <TableCell padding="none">
+                              <input
+                                value={row.videoURL}
+                                name="videoURL"
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                            </TableCell>
+                            <TableCell padding="none">
+                              <input
+                                value={row.videoLength}
+                                name="videoLength"
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                            </TableCell>
+                            <TableCell padding="none">
+                              <input
+                                value={row.questionnaireURL}
+                                name="questionnaireURL"
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                            </TableCell>
+                            <TableCell padding="none">
+                              <input
+                                type="number"
+                                value={row.maxAttempts}
+                                name="maxAttempts"
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                            </TableCell>
+                            <TableCell padding="none">
+                              <input
+                                type="number"
+                                value={row.rewardPrice}
+                                name="rewardPrice"
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                            </TableCell>
+                            <TableCell padding="none">
+                              <input
+                                type="number"
+                                value={row.rewardsValidity}
+                                name="rewardsValidity"
+                                onChange={(e) => handleInputChange(e, i)}
+                              />
+                            </TableCell>
+                            <TableCell padding="none">
+                              {row.creationDate}
+                            </TableCell>
+                          </>
+                        ) : (
+                          <>
+                            <TableCell component="th" scope="row">
+                              {row.courseName}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {row.courseDesc}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {row.videoURL}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {row.videoLength}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {row.questionnaireURL}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {row.maxAttempts}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {row.rewardPrice}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {row.rewardsValidity}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {row.creationDate}
+                            </TableCell>
+                            <TableCell
+                              component="th"
+                              scope="row"
+                              align="center"
+                            ></TableCell>
+                          </>
+                        )}
+                        {isEdit ? (
+                          <Button className="mr10" onClick={handleConfirm}>
+                            <ClearIcon />
+                          </Button>
+                        ) : (
+                          <Button className="mr10" onClick={handleConfirm}>
+                            <DeleteOutlineIcon />
+                          </Button>
+                        )}
+                        {showConfirm && (
+                          <>
+                            <Dialog
+                              open={showConfirm}
+                              onClose={handleNo}
+                            >
+                              <DialogTitle>Are you sure you want to delete?</DialogTitle>
+                              <DialogContent>
+                                <DialogContentText>
+                                  <Button
+                                    onClick={() => handleRemoveClick(i)}
+                                    color="primary"
+                                    autoFocus
                                   >
-                                    <DialogTitle id="alert-dialog-title">
-                                      {"Confirm Delete"}
-                                    </DialogTitle>
-                                    <DialogContent>
-                                      <DialogContentText id="alert-dialog-description">
-                                        Are you sure to delete
-                                      </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions>
-                                      <Button
-                                        onClick={() => handleRemoveClick(i)}
-                                        color="primary"
-                                        autoFocus
-                                      >
-                                        Yes
-                                      </Button>
-                                      <Button
-                                        onClick={handleNo}
-                                        color="primary"
-                                        autoFocus
-                                      >
-                                        No
-                                      </Button>
-                                    </DialogActions>
-                                  </Dialog>
-                                </div>
-                              )}
-                            </TableRow>
-                          </div>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </Box>
+                                    Yes
+                                  </Button>
+                                  <Button
+                                    onClick={handleNo}
+                                    color="primary"
+                                    autoFocus
+                                  >
+                                    No
+                                  </Button>
+                                </DialogContentText>
+                              </DialogContent>
+                            </Dialog>
+                          </>
+                        )}
+                      </TableRow>
+                    </>
+                  );
+                })}
               </TableBody>
-            </Grid>
-        </Grid>
-    </ApexChartWrapper>
+            </Table>
+          
+        
+        </TableContainer>
+
     
   )
 }

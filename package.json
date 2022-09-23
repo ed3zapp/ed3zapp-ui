@@ -59,7 +59,7 @@
     "@popperjs/core": "^2.11.2",
     "@superfluid-finance/js-sdk": "^0.5.12",
     "@superfluid-finance/sdk-core": "^0.3.2",
-    "@tableland/sdk": "^3.1.1",
+    "@tableland/sdk": "^3.1.2",
     "apexcharts-clevision": "3.28.5",
     "axios": "^0.27.2",
     "bootstrap": "^5.1.3",
