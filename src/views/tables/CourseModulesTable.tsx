@@ -1,12 +1,12 @@
 // ** React Imports
-import { Fragment, useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import CreateIcon from "@material-ui/icons/Create";
 import {
   Alert, Paper, TableContainer,
     Box, Button, Snackbar, Table,
-    TableBody, TableCell, TableHead, TableRow
+    TableBody, TableCell, TableHead, TableRow, IconButton
 } from "@mui/material";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import AddBoxIcon from "@material-ui/icons/AddBox";
@@ -17,10 +17,10 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-
-interface IProps {
-  courseId: number;
-}
+import { useTableland } from "../../services/hooks/useTableland";
+import { useStore, UserType } from 'src/services/store';
+import { storeWithProgress, makeVideoObject, makeFileUrl } from '../../services/web3StorageUtils';
+import VideoVintage from 'mdi-material-ui/VideoVintage'
 
 // Creating styles
 const useStyles = makeStyles({
@@ -37,17 +37,37 @@ const useStyles = makeStyles({
   },
 });
 
-const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
- 
+interface CourseModulesTableType {
+  id: number;
+  moduleName: string;
+  moduleDesc: string;
+  videoURL: File;
+  videoIpfsUrl: string;
+  questionnaireURL: string;
+  questionnaireIpfsUrl: string;
+  maxAttempts: number;
+  rewardPrice: number;
+  rewardsValidity: number;
+  creationDate: string;
+}
+
+interface IProps {
+  showTable: boolean;
+  courseId: number;
+}
+
+const CourseModulesTable: React.FC<IProps> = ({ showTable, courseId }) => {
+  const {
+    state: { provider, wallet },
+  } = useStore();
+
   const currDate = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(Date.now());
   // Creating style object
   const classes = useStyles();
   
   // Defining a state named rows
   // which we can update by calling on setRows function
-  const [rows, setRows] = useState([
-      { id: 1, courseName: "", courseDesc: "", videoURL: "", videoLength: "", questionnaireURL: "", maxAttempts: 0, rewardPrice: 0, rewardsValidity: 0, creationDate: currDate },
-  ]);
+  const [rows, setRows] = useState<CourseModulesTableType[]>([])
 
   // Initial states
   const [open, setOpen] = useState(false);
@@ -55,6 +75,8 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
   const [isEdit, setEdit] = useState(false);
   const [disable, setDisable] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
+  const { ccCourseModulesTableEntry, getUserType, 
+    getContentCreatorCourseModules } = useTableland();
 
   // Function For closing the alert snackbar
   const handleClose = (event, reason) => {
@@ -76,8 +98,9 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
       setRows([
           ...rows,
           {
-              id: rows.length + 1, courseName: "", courseDesc: "", videoURL: "", videoLength: "", 
-              questionnaireURL: "", maxAttempts: 0, rewardPrice: 0, rewardsValidity: 0, creationDate: currDate,
+              id: rows.length + 1, moduleName: "", moduleDesc: "", videoURL: null,
+              videoIpfsUrl: "", questionnaireURL: "", questionnaireIpfsUrl: "",
+              maxAttempts: 0, rewardPrice: 0, rewardsValidity: 0, creationDate: currDate
           },
       ]);
       setEdit(true);
@@ -92,15 +115,31 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
 
   const [alertErrMessage, setAlertErrMessage] = useState("");
   // Function to handle save
-  const handleSave = () => {
+  const handleSave = async() => {
       let isError = false;
 
-      rows.map((row) => {
-        if (typeof row.courseName === "string" && row.courseName.trim().length === 0) {
-          setAlertErrMessage("Course name cannot be empty!");
+      rows.map((row, index) => {
+        const rowNum = index + 1;
+        if (typeof row.moduleName === "string" && row.moduleName.trim().length === 0) {
+          setAlertErrMessage("Row " + rowNum + ": Course name cannot be empty!");
           isError = true;
-        } else if (typeof row.courseDesc === "string" && row.courseDesc.trim().length === 0) {
-          setAlertErrMessage("Course description cannot be empty!");
+        } else if (typeof row.moduleDesc === "string" && row.moduleDesc.trim().length === 0) {
+          setAlertErrMessage("Row " + rowNum + ": Course description cannot be empty!");
+          isError = true;
+        } else if (row.videoURL === null) {
+          setAlertErrMessage("Row " + rowNum + ": Video URL cannot be empty!");
+          isError = true;
+        } else if (typeof row.questionnaireURL === "string" && row.questionnaireURL.trim().length === 0) {
+          setAlertErrMessage("Row " + rowNum + ": Questionnaire URL cannot be empty!");
+          isError = true;
+        } else if (typeof row.maxAttempts === "number" && row.maxAttempts > 0) {
+          setAlertErrMessage("Row " + rowNum + ": Maximum attempts cannot be 0!");
+          isError = true;
+        } else if (typeof row.rewardPrice === "number" && row.rewardPrice > 0) {
+          setAlertErrMessage("Row " + rowNum + ": Reward price cannot be 0!");
+          isError = true;
+        } else if (typeof row.rewardsValidity === "number" && row.rewardsValidity > 0) {
+          setAlertErrMessage("Row " + rowNum + ": Reward validity cannot be 0!");
           isError = true;
         }
       });
@@ -108,6 +147,12 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
       if (isError) {
         setOpenError(true);
       } else {
+        rows.map((row, index) => {
+          uploadToIPFS(row.videoURL, index, "video");
+        });
+
+        sqlTableEntry(rows)
+
         setEdit(!isEdit);
         setRows(rows);
         console.log("saved : ", rows);
@@ -115,6 +160,149 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
         setOpen(true);
       }
   };
+
+  const handleVideoChange = (e, index) => {
+    setDisable(false);
+    if (!e.target.files) {
+      return;
+    }
+    const { name, value } = e.target;
+    console.log("handleVideoChange1: " + name);
+    console.log("handleVideoChange2: " + value);
+    const file = e.target.files[0];
+    console.log("handleVideoChange: file: " + file);
+    const list = [...rows];
+    list[index][name] = file;
+    setRows(list); 
+  }
+
+  const uploadToIPFS = async (file: File, index: number, type: string) => {
+    console.log("Uploading file to IPFS...");
+
+    var reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+
+    let fileArrayBuffer: ArrayBuffer;
+    try {
+    reader.onload = function(e) {
+      fileArrayBuffer = reader.result as ArrayBuffer;
+    }
+    reader.onerror = function (error) {
+      console.log('Error reading JSON file: ', error);
+    };
+    } catch (error) {
+      console.log("Error parsing video file: " + error)
+    }
+
+    const fileObj = makeVideoObject(fileArrayBuffer, file.name);
+    const cid = await storeWithProgress([fileObj], false);
+    console.log("cid: " + cid)
+    const videFileURL = makeFileUrl(cid, file.name);
+    console.log("videFileURL: " + videFileURL)
+
+    const list = [...rows];
+    list[index]["videoIpfsUrl"] = videFileURL;
+    setRows(list); 
+  }
+
+  const sqlTableEntry = async(rows: CourseModulesTableType[]) => {
+
+    // Content Creator course modules details entry
+    rows.map(async (row, index) => {
+      const counter = index + 1;
+      console.log("CourseModulesTable: sqlTableEntry: Table entry: " + counter)
+
+      let startTime = Math.floor(Date.now());
+      const ccDetailsEntryResult = await ccCourseModulesTableEntry(provider, {
+        ccCourseId: row.id,
+        moduleName: row.moduleName,
+        moduleDescription: row.moduleDesc,
+        videoURL: row.videoIpfsUrl,
+        questionnaireURL: row.questionnaireIpfsUrl,
+        maxAttempts: row.maxAttempts,
+        rewardPrice: row.rewardPrice,
+        rewardValidity: row.rewardsValidity
+      });
+      console.log("CourseModulesTable: sqlTableEntry: table entry result: " + ccDetailsEntryResult);
+      let endTime = Math.floor(Date.now());
+      console.log("CourseModulesTable: sqlTableEntry: Time to insert cc modules: " + (endTime - startTime));
+    });
+  }
+
+  const [userType, setUserType] = useState(0);
+  const [isContentCreator, setIsContentCreator] = useState(false);
+  const [contentCreatorId, setContentCreatorId] = useState(0);
+  const [courses, setCourses] = useState({ columns: [], rows: [] });
+
+  const fetchCourses = async () => {
+    let startTime = Math.floor(Date.now());
+    let endTime = Math.floor(Date.now());
+    let userTypeVar = userType;
+
+    // check type of user 
+    if (userType == 0) {
+      startTime = Math.floor(Date.now());
+      userTypeVar = await getUserType(provider, wallet);
+      endTime = Math.floor(Date.now());
+      console.log("CourseModulesTable: Time to get user type: " + (endTime - startTime));
+      setUserType(userTypeVar)
+    }
+
+    console.log("CourseModulesTable: userTypeVar: " + userTypeVar)
+    let isUserCC = false;
+    if (userTypeVar == UserType.CONTENT_CREATOR) {
+      setIsContentCreator(true);
+      isUserCC = true;
+    } 
+
+    console.log("CourseModulesTable: isUserCC: " + isUserCC)
+    if (isUserCC) {
+
+      console.log("courseId undef???: " + (courseId == undefined))
+      const courseIdVal = courseId !== undefined ? courseId : 0;
+      console.log("courseId undef fixed???: " + courseIdVal)
+      console.log("CourseModulesTable: inside IF: " + courseId)
+      // Get content creator course modules
+      startTime = Math.floor(Date.now());
+      const newCourses = await getContentCreatorCourseModules(provider, courseIdVal);
+      endTime = Math.floor(Date.now());
+      console.log("CourseModulesTable: Time to get content creator courses: " + (endTime - startTime));
+
+      let x = newCourses !== null ? newCourses.rows.length : 0;
+      console.log("CourseModulesTable: Set courses: " +  x);
+      setCourses(newCourses);
+
+      const tempRows: CourseModulesTableType[] = []; 
+      const tempRowObject: CourseModulesTableType = null;
+      setRows([]);
+
+      newCourses.rows.map((row, index) => {
+        tempRowObject.id = rows.length + 1;
+        tempRowObject.moduleName = row[2];
+        tempRowObject.moduleDesc = row[3];
+        tempRowObject.videoURL = row[4];
+        tempRowObject.questionnaireURL = row[5];
+        tempRowObject.maxAttempts = row[6];
+        tempRowObject.rewardPrice = row[7];
+        tempRowObject.rewardsValidity = row[8];
+        tempRowObject.creationDate = row[9];
+        tempRows.push(tempRowObject);
+      })
+      x = tempRows !== null ? tempRows.length : 0;
+      console.log("CourseModulesTable: Set courses: " +  x);
+      setRows(tempRows);
+    }
+  }
+
+  //To fetch courses onload
+  /*useEffect(() => {
+    if (!provider) {
+      return;
+    }
+
+    fetchCourses();
+  }, [provider]);*/
+
 
   // The handleInputChange handler can be set up to handle
   // many different inputs in the form, listen for changes 
@@ -149,8 +337,10 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
 
 
   return (
-
-      <TableContainer component={Paper}>
+      (showTable ? 
+        <>
+        <p>comes here: {fetchCourses()}</p>
+        <TableContainer component={Paper}>
           <Snackbar
             open={open}
             autoHideDuration={2000}
@@ -217,10 +407,9 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>Course Name</TableCell>
-                  <TableCell>Course Description</TableCell>
+                  <TableCell>Module Name</TableCell>
+                  <TableCell>Module Description</TableCell>
                   <TableCell>Video URL</TableCell>
-                  <TableCell>Video Length</TableCell>
                   <TableCell>Questionnaire URL</TableCell>
                   <TableCell>Max Attempts</TableCell>
                   <TableCell>Reward Price</TableCell>
@@ -238,31 +427,23 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
                           <>
                             <TableCell padding="none">
                               <input
-                                value={row.courseName}
-                                name="courseName"
+                                value={row.moduleName}
+                                name="moduleName"
                                 onChange={(e) => handleInputChange(e, i)}
                               />
                             </TableCell>
                             <TableCell padding="none">
                               <input
-                                value={row.courseDesc}
-                                name="courseDesc"
+                                value={row.moduleDesc}
+                                name="moduleDesc"
                                 onChange={(e) => handleInputChange(e, i)}
                               />
                             </TableCell>
                             <TableCell padding="none">
-                              <input
-                                value={row.videoURL}
-                                name="videoURL"
-                                onChange={(e) => handleInputChange(e, i)}
-                              />
-                            </TableCell>
-                            <TableCell padding="none">
-                              <input
-                                value={row.videoLength}
-                                name="videoLength"
-                                onChange={(e) => handleInputChange(e, i)}
-                              />
+                              <IconButton color="primary" aria-label="upload video" component="label" >
+                                <input name="videoURL" hidden accept="video/*" type="file" onChange={(e) => handleVideoChange(e, i)} />
+                                <VideoVintage />
+                              </IconButton>
                             </TableCell>
                             <TableCell padding="none">
                               <input
@@ -302,16 +483,13 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
                         ) : (
                           <>
                             <TableCell component="th" scope="row">
-                              {row.courseName}
+                              {row.moduleName}
                             </TableCell>
                             <TableCell component="th" scope="row">
-                              {row.courseDesc}
+                              {row.moduleDesc}
                             </TableCell>
                             <TableCell component="th" scope="row">
                               {row.videoURL}
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                              {row.videoLength}
                             </TableCell>
                             <TableCell component="th" scope="row">
                               {row.questionnaireURL}
@@ -378,11 +556,9 @@ const CourseModulesTable: React.FC<IProps> = ({ courseId }) => {
                 })}
               </TableBody>
             </Table>
-          
-        
         </TableContainer>
-
-    
+        </>
+      : "")
   )
 }
 

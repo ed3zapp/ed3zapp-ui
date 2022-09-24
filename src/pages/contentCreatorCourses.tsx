@@ -1,5 +1,3 @@
-import { ReadQueryResult } from  "@tableland/sdk"
-
 // ** MUI Imports
 import Color from 'color';
 import Grid from '@mui/material/Grid'
@@ -51,31 +49,34 @@ const ContentCreatorCourses = () => {
         state: { provider, wallet },
       } = useStore();
 
-    const [courses, setCourses] = useState({
-      columns: [],
-      rows: [],
-    });
+    const [courses, setCourses] = useState({ columns: [], rows: [] });
     const [open, setOpen] = useState(false);
     const [contentCreatorId, setContentCreatorId] = useState(0);
     const { getContentCreatorId, getUserType, getContentCreatorCourses } = useTableland();
     const [isContentCreator, setIsContentCreator] = useState(false);
+    const [userType, setUserType] = useState(0);
 
     const fetchCourses = async (retry = false, retries = 0) => {
       const id = parseInt(router.query.contentCreatorId as string, 0);
       console.log("ContentCreatorCourses: ContentCreatorId from router: " + id)
-      
-      // check type of user 
       let startTime = Math.floor(Date.now());
-      const userType = await getUserType(provider, wallet);
+      let endTime = Math.floor(Date.now());
+      let userTypeVar = userType;
+
+      // check type of user 
+      if (userType == 0) {
+        startTime = Math.floor(Date.now());
+        userTypeVar = await getUserType(provider, wallet);
+        endTime = Math.floor(Date.now());
+        console.log("Time to get user type: " + (endTime - startTime));
+        setUserType(userTypeVar)
+      }
 
       let isUserCC = false;
-      if (userType == UserType.CONTENT_CREATOR) {
+      if (userTypeVar == UserType.CONTENT_CREATOR) {
         setIsContentCreator(true);
         isUserCC = true;
       } 
-
-      let endTime = Math.floor(Date.now());
-      console.log("Time to get user type: " + (endTime - startTime));
 
       if (isUserCC) {
         let tb_contentCreatorId: number;
@@ -102,7 +103,6 @@ const ContentCreatorCourses = () => {
         endTime = Math.floor(Date.now());
         console.log("ContentCreatorCourses: Time to get content creator courses: " + (endTime - startTime));
 
-
         const coursesLen = courses !== null ? courses.rows.length : 0;
         const newCoursesLen = newCourses !== null ? newCourses.rows.length : 0;
         console.log("coursesLen: " + coursesLen)
@@ -120,7 +120,6 @@ const ContentCreatorCourses = () => {
         }
         console.log("Init load courses");
         setCourses(newCourses);
-        console.log("newCourses.rows.length: " + newCourses.rows.length)
       }
     };
   
@@ -169,7 +168,7 @@ const ContentCreatorCourses = () => {
                                 <Typography variant='h6' sx={{ marginBottom: 2 }}>
                                 {data[2]}
                                 </Typography>
-                                <Box sx={{ mb: 4.75, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                                <Box sx={{ mb: 2.75, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                                     <Rating readOnly value={randRating} name='read-only' sx={{ marginRight: 2 }} />
                                     <Typography variant='body2'>{randRating} Star | {randReview} reviews</Typography>
                                 </Box>
@@ -200,7 +199,7 @@ const ContentCreatorCourses = () => {
                                 <Typography sx={{ fontWeight: 'bold' }}>
                                   Creation Date:{' '}
                                   <Box component='span' sx={{ fontWeight: 500 }}>
-                                    {data[8]}
+                                    {data[9]}
                                   </Box>
                                 </Typography>
                             </CardContent>

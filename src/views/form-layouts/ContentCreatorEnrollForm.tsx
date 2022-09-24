@@ -84,6 +84,13 @@ const ContentCreatorEnrollForm: React.FC<IProps> = ({open2, onClose}) => {
         endTime = Math.floor(Date.now());
         console.log("CCEnrollForm: Time to provide grant to cc_courses: " + (endTime - startTime));
 
+        // Grant access to cc_modules table
+        startTime = Math.floor(Date.now());
+        const ccCourseModulesAccessGrantResult = await grantUserAccessToTable(provider, wallet, TABLE_TYPE.CC_COURSE_MODULES);
+        console.log("Content Creators table access grant to cc_modules status: " + ccCourseModulesAccessGrantResult)
+        endTime = Math.floor(Date.now());
+        console.log("CCEnrollForm: Time to provide grant to cc_modules: " + (endTime - startTime));
+
         // Get content creator id
         startTime = Math.floor(Date.now());
         const tb_contentCreatorId = await getContentCreatorId(provider, wallet);

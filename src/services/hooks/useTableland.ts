@@ -8,7 +8,8 @@ export enum TABLE_TYPE {
   USERS = 1,
   LEARNERS = 2,
   CONTENT_CREATORS = 3,
-  CC_COURSES = 4
+  CC_COURSES = 4,
+  CC_COURSE_MODULES = 5
 }
 
 // Table - users
@@ -43,6 +44,19 @@ export type TableType_CC_Courses = {
   topic: string,
   price: number,
   rewards: number
+}
+
+// Table - cc_modules
+export const TableName_CC_Course_Modules = 'cc_modules_80001_2840' // Polygon
+export type TableType_CC_Course_Modules = {
+  ccCourseId: number,
+  moduleName: string,
+  moduleDescription: string,
+  videoURL: string,
+  questionnaireURL: string,
+  maxAttempts: number,
+  rewardPrice: number,
+  rewardValidity: number
 }
 
 export let dbConnection = null;
@@ -145,6 +159,21 @@ export function useTableland() {
     return validate_txhash(queryResult.hash)
   }
 
+  // Content creator course modules data entry
+  const ccCourseModulesTableEntry = async (provider : ethers.providers.Web3Provider, data: TableType_CC_Course_Modules) => {
+    const tableland = await getConnection(provider);
+    let startTime = Math.floor(Date.now());
+    const queryResult = await tableland.write(format(db_sql_properties.sql_cc_course_modules_table_entries, TableName_CC_Course_Modules, 
+                          data.ccCourseId, data.moduleName, data.moduleDescription, data.videoURL, data.questionnaireURL, 
+                          data.maxAttempts, data.rewardPrice, data.rewardValidity),
+                          { skipConfirm: true });
+
+    let endTime = Math.floor(Date.now());
+    console.log("userTableLand: ccCourseModulesTableEntry: entry time: " + (endTime - startTime));
+
+    return validate_txhash(queryResult.hash)
+  }
+
   // Get content creator courses
   const getContentCreatorCourses = async (provider : ethers.providers.Web3Provider, contentCreatorId: number) => {
     const tableland = await getConnection(provider);
@@ -153,6 +182,18 @@ export function useTableland() {
 
     let endTime = Math.floor(Date.now());
     console.log("userTableLand: getContentCreatorCourses: entry time: " + (endTime - startTime));
+
+    return queryResult
+  }
+
+  // Get content creator course modules
+  const getContentCreatorCourseModules = async (provider : ethers.providers.Web3Provider, contentCreatorCourseId: number) => {
+    const tableland = await getConnection(provider);
+    let startTime = Math.floor(Date.now());
+    const queryResult = await tableland.read(format(db_sql_properties.sql_get_cc_course_modules, TableName_CC_Course_Modules, contentCreatorCourseId));
+
+    let endTime = Math.floor(Date.now());
+    console.log("userTableLand: getContentCreatorCourseModules: entry time: " + (endTime - startTime));
 
     return queryResult
   }
@@ -195,7 +236,7 @@ export function useTableland() {
       }
     }
 
-    return 9999;
+    return 0;
   }
 
   // Get user type
@@ -226,6 +267,8 @@ export function useTableland() {
           tableName = TableName_ContentCreators;
         } else if (tableType == TABLE_TYPE.CC_COURSES) {
           tableName = TableName_CC_Courses;
+        } else if (tableType == TABLE_TYPE.CC_COURSE_MODULES) {
+          tableName = TableName_CC_Course_Modules;
         }
 
         let startTime = Math.floor(Date.now()); // in seconds
@@ -260,8 +303,8 @@ export function useTableland() {
     const tableland = await getConnection(provider);
 
     let startTime = Math.floor(Date.now());
-    const queryResult = await tableland.create(`id INTEGER PRIMARY KEY, ccId INTEGER, name TEXT, description TEXT, topic TEXT, price INTEGER, rewards INTEGER, totalRating INTEGER, ratingCount INTEGER, creationDate TEXT`, {
-      prefix: `cc_courses`
+    const queryResult = await tableland.create(`id INTEGER PRIMARY KEY, ccCourseId INTEGER, name TEXT, description TEXT, videoURL TEXT, questionnaireURL TEXT, maxAttempts INTEGER, rewardPrice INTEGER, rewardValidity INTEGER, creationDate TEXT`, {
+      prefix: `cc_modules`
     }); 
     let endTime = Math.floor(Date.now());
     console.log("createTableTest: Time to create table: " + (endTime - startTime));
@@ -296,6 +339,8 @@ export function useTableland() {
             getContentCreatorId,
             ccCoursesTableEntry,
             getContentCreatorCourses,
+            ccCourseModulesTableEntry,
+            getContentCreatorCourseModules,
             updateTest,
             createTableTest
           }
