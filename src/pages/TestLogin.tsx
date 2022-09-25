@@ -1,8 +1,8 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import { loginUser, StoreAction, useStore } from "../services/store";
-import { Web3Provider } from "@ethersproject/providers";
 import { CircularProgress } from "@mui/material";
+import { ethers } from "ethers";
 
 
 declare const window: any
@@ -24,7 +24,7 @@ const Login: React.FC = () => {
       });
 
       console.log("before loginUser");
-      loginUser(new Web3Provider(window.ethereum), logout, store.dispatch);
+      loginUser(new ethers.providers.Web3Provider(window.ethereum), logout, store.dispatch);
   }
 
   const logout = () => {

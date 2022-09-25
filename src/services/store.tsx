@@ -1,11 +1,10 @@
 import { ethers, Contract } from "ethers";
 import React from "react";
 
-import USER_ABI from "../configs/abis/User.json";
+import USER_ABI from "../configs/abis/App.json";
 import { useTableland } from "./hooks/useTableland";
 
-//Contract address of User.sol(ed3Zapp-core) deployed at Polygon Mumbai
-//const CONTRACT_ADDRESS = "0x41810ea34aA8208cF0D8B6CD779582e6e70fBb89";
+import { application_properties } from '../configs/application-properties';
 
 export enum UserType {
   CONTENT_CREATOR = 1,
@@ -84,7 +83,7 @@ async function loginUser(
   const address = await signer.getAddress();
   const wallet = String(address);
 
-  //const contract = new ethers.Contract(CONTRACT_ADDRESS, USER_ABI.abi, signer);
+  const contract = new ethers.Contract(application_properties.contract_address, USER_ABI.abi, signer);
   let userType = UserType.UNENROLLED;
   let startTime = Math.floor(Date.now()); // in seconds
   let endTime = Math.floor(Date.now()); // in seconds
@@ -96,7 +95,12 @@ async function loginUser(
   //endTime = Math.floor(Date.now());
   //console.log("Total time to delete tables: " + (endTime - startTime));
   //console.log("Test delete done!")
-  
+
+  // Test- Create table
+  //const { createTableTest } = useTableland();
+  //const createQueryResult = await createTableTest(provider);
+  //console.log("Test create done: " + createQueryResult)
+
   // Check if user is already registered user
   startTime = Math.floor(Date.now());
   const { isUserExists, getUserType } = useTableland();
@@ -113,9 +117,10 @@ async function loginUser(
     console.log("Time to get user type: " + (endTime - startTime));
   }
 
+  console.log("comes here9")
   dispatch({
     type: StoreAction.LOGIN,
-    payload: { wallet, provider, userType, logout }, // add "contract" here
+    payload: { wallet, provider, contract, userType, logout },
   });
 }
 

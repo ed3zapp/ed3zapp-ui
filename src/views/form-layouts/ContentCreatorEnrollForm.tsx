@@ -36,7 +36,11 @@ const ContentCreatorEnrollForm: React.FC<IProps> = ({open2, onClose}) => {
         let endTime = Math.floor(Date.now()); // in seconds
 
         setLoading(true);
-        const { grantUserAccessToTable, userTableEntry, contentCreatorTableEntry } = useTableland();
+        const { grantUserAccessToTable, 
+                    userTableEntry, 
+                    contentCreatorTableEntry,
+                    getContentCreatorId
+                } = useTableland();
 
         // Grant access to users table
         startTime = Math.floor(Date.now());
@@ -60,7 +64,7 @@ const ContentCreatorEnrollForm: React.FC<IProps> = ({open2, onClose}) => {
         const ccAccessGrantResult = await grantUserAccessToTable(provider, wallet, TABLE_TYPE.CONTENT_CREATORS);
         console.log("Content Creators table access grant to user status: " + ccAccessGrantResult)
         endTime = Math.floor(Date.now());
-        console.log("CCEnrollForm: Time to provide grant to learners: " + (endTime - startTime));
+        console.log("CCEnrollForm: Time to provide grant to user: " + (endTime - startTime));
 
         // Content Creator details entry
         startTime = Math.floor(Date.now());
@@ -71,11 +75,37 @@ const ContentCreatorEnrollForm: React.FC<IProps> = ({open2, onClose}) => {
         });
         console.log("New Content Creator details entry to table status: " + ccDetailsEntryResult)
         endTime = Math.floor(Date.now());
-        console.log("CCEnrollForm: Time to insert learners: " + (endTime - startTime));
+        console.log("CCEnrollForm: Time to insert cc: " + (endTime - startTime));
         
+        // Grant access to cc_courses table
+        startTime = Math.floor(Date.now());
+        const ccCoursesAccessGrantResult = await grantUserAccessToTable(provider, wallet, TABLE_TYPE.CC_COURSES);
+        console.log("Content Creators table access grant to cc_courses status: " + ccCoursesAccessGrantResult)
+        endTime = Math.floor(Date.now());
+        console.log("CCEnrollForm: Time to provide grant to cc_courses: " + (endTime - startTime));
+
+        // Grant access to cc_modules table
+        startTime = Math.floor(Date.now());
+        const ccCourseModulesAccessGrantResult = await grantUserAccessToTable(provider, wallet, TABLE_TYPE.CC_COURSE_MODULES);
+        console.log("Content Creators table access grant to cc_modules status: " + ccCourseModulesAccessGrantResult)
+        endTime = Math.floor(Date.now());
+        console.log("CCEnrollForm: Time to provide grant to cc_modules: " + (endTime - startTime));
+
+        // Get content creator id
+        startTime = Math.floor(Date.now());
+        const tb_contentCreatorId = await getContentCreatorId(provider, wallet);
+        console.log("Content creator ID: " + tb_contentCreatorId)
+        endTime = Math.floor(Date.now());
+        console.log("CCEnrollForm: Time to get content creator ID: " + (endTime - startTime));
+
         setLoading(false);
         onClose()
-        router.push("/ccTest");
+        router.push({
+            pathname: '/contentCreatorCourses',
+            query: {
+                contentCreatorId: tb_contentCreatorId
+            }
+        }, '/contentCreatorCourses');
       };
 
   return (
