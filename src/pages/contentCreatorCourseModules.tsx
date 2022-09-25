@@ -203,12 +203,6 @@ const ContentCreatorCourseModules: React.FC = () => {
         } else if (typeof row.moduleDesc === "string" && row.moduleDesc.trim().length === 0) {
           setAlertErrMessage("Row " + rowNum + ": Course description cannot be empty!");
           isError = true;
-        } else if (row.videoURL == null) {
-          setAlertErrMessage("Row " + rowNum + ": Video URL cannot be empty!");
-          isError = true;
-        } else if (typeof row.questionnaireURL === "string" && row.questionnaireURL.trim().length === 0) {
-          setAlertErrMessage("Row " + rowNum + ": Questionnaire URL cannot be empty!");
-          isError = true;
         } else if (typeof row.maxAttempts === "number" && row.maxAttempts > 0) {
           setAlertErrMessage("Row " + rowNum + ": Maximum attempts cannot be 0!");
           isError = true;

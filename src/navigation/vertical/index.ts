@@ -3,6 +3,7 @@ import Login from 'mdi-material-ui/Login'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import BookOpenBlankVariant from 'mdi-material-ui/BookOpenBlankVariant'
 import TrophyAward from 'mdi-material-ui/TrophyAward'
+import School from 'mdi-material-ui/School'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -20,7 +21,7 @@ const navigation = ( userType: number ): VerticalNavItemsType => {
         {
           title: 'Account Details',
           icon: HomeOutline,
-          path: '/ccTest'
+          path: '/sponsorDashboard'
         },
         {
           sectionTitle: 'Pages'
@@ -28,11 +29,11 @@ const navigation = ( userType: number ): VerticalNavItemsType => {
         {
           title: 'Leaderboard',
           icon: TrophyAward,
-          path: '/'
+          path: '/leaderboard'
         },
         {
           title: 'Courses',
-          icon: BookOpenBlankVariant,
+          icon: School,
           path: '/contentCreatorCourses'
         },
         {
@@ -49,7 +50,7 @@ const navigation = ( userType: number ): VerticalNavItemsType => {
         {
           title: 'Account Details',
           icon: HomeOutline,
-          path: '/'
+          path: '/learnerDashboard'
         },
         {
           sectionTitle: 'Pages'
@@ -57,17 +58,12 @@ const navigation = ( userType: number ): VerticalNavItemsType => {
         {
           title: 'Leaderboard',
           icon: TrophyAward,
-          path: '/'
+          path: '/leaderboard'
         },
         {
           title: 'Courses',
           icon: BookOpenBlankVariant,
-          path: '/'
-        },
-        {
-          title: 'Modules',
-          icon: BookOpenBlankVariant,
-          path: '/'
+          path: '/learnerCourses'
         }
       ]
     default:
@@ -75,7 +71,7 @@ const navigation = ( userType: number ): VerticalNavItemsType => {
         {
           title: 'Enroll',
           icon: Login,
-          path: '/'
+          path: '/chooseRole'
         }
       ]
   }
