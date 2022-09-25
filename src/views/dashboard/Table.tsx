@@ -47,7 +47,11 @@ const statusObj: StatusObj = {
 const MAX_FETCH_RETRIES = 60; // max retries to fetch from provider when expecting a change
 const FETCH_RETRY_TIMEOUT = 1000; // timeout between fetches when expecting a change
 
-const DashboardTable = () => {
+interface IProps {
+  data: any;
+}
+
+const DashboardTable: React.FC<IProps> = ({ data }) => {
   const {
     state: { contract, wallet },
   } = useStore();

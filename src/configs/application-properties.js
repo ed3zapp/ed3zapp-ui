@@ -31,7 +31,7 @@ export const db_sql_properties = {
 };
 
 export const application_properties = {
-    contract_address: "0xC269e726B572Ad444df1BfC3197ebBE62F34daBb"
+    contract_address: "0x82988C3B405960026DFF566F282E8B4f4fDb808E"
 };
 
 
