@@ -264,7 +264,7 @@ const CourseModulesTable: React.FC<IProps> = ({ showTable, courseId }) => {
       console.log("CourseModulesTable: inside IF: " + courseId)
       // Get content creator course modules
       startTime = Math.floor(Date.now());
-      const newCourses = await getContentCreatorCourseModules(provider, courseIdVal);
+      const newCourses = await getContentCreatorCourseModules(provider, 0, wallet);
       endTime = Math.floor(Date.now());
       console.log("CourseModulesTable: Time to get content creator courses: " + (endTime - startTime));
 
@@ -558,7 +558,7 @@ const CourseModulesTable: React.FC<IProps> = ({ showTable, courseId }) => {
             </Table>
         </TableContainer>
         </>
-      : "")
+      : <></>)
   )
 }
 

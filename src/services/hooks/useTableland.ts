@@ -3,6 +3,7 @@ import { ethers } from 'ethers'
 import { UserType } from "../store"
 import { format } from 'react-string-format';
 import { db_sql_properties } from '../../configs/application-properties';
+import { count } from "console";
 
 export enum TABLE_TYPE {
   USERS = 1,
@@ -87,6 +88,20 @@ export function useTableland() {
     const queryResult3 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_Learners),
                           { skipConfirm: true });
     console.log("test queryResult3: " + validate_txhash(queryResult3.hash))
+    endTime = Math.floor(Date.now());
+    console.log("Time to delete " + TableName_Learners + ": " + (endTime - startTime));
+
+    startTime = Math.floor(Date.now());
+    const queryResult4 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_CC_Courses),
+                          { skipConfirm: true });
+    console.log("test queryResult4: " + validate_txhash(queryResult4.hash))
+    endTime = Math.floor(Date.now());
+    console.log("Time to delete " + TableName_Learners + ": " + (endTime - startTime));
+
+    startTime = Math.floor(Date.now());
+    const queryResult5 = await tableland.write(format(db_sql_properties.sql_delete_entries, TableName_CC_Course_Modules),
+                          { skipConfirm: true });
+    console.log("test queryResult5: " + validate_txhash(queryResult5.hash))
     endTime = Math.floor(Date.now());
     console.log("Time to delete " + TableName_Learners + ": " + (endTime - startTime));
 
@@ -175,11 +190,11 @@ export function useTableland() {
   }
 
   // Get content creator courses
-  const getContentCreatorCourses = async (provider : ethers.providers.Web3Provider, contentCreatorId: number) => {
+  const getContentCreatorCourses = async (provider : ethers.providers.Web3Provider, address: string) => {
     const tableland = await getConnection(provider);
     let startTime = Math.floor(Date.now());
-    const queryResult = await tableland.read(format(db_sql_properties.sql_get_cc_courses, TableName_CC_Courses, contentCreatorId));
-
+    const queryResult = await tableland.read(format(db_sql_properties.sql_get_cc_courses, TableName_Users, 
+                                              TableName_ContentCreators, TableName_CC_Courses, address ));
     let endTime = Math.floor(Date.now());
     console.log("userTableLand: getContentCreatorCourses: entry time: " + (endTime - startTime));
 
@@ -187,10 +202,11 @@ export function useTableland() {
   }
 
   // Get content creator course modules
-  const getContentCreatorCourseModules = async (provider : ethers.providers.Web3Provider, contentCreatorCourseId: number) => {
+  const getContentCreatorCourseModules = async (provider : ethers.providers.Web3Provider, couserId: number, address: string) => {
     const tableland = await getConnection(provider);
     let startTime = Math.floor(Date.now());
-    const queryResult = await tableland.read(format(db_sql_properties.sql_get_cc_course_modules, TableName_CC_Course_Modules, contentCreatorCourseId));
+    const queryResult = await tableland.read(format(db_sql_properties.sql_get_cc_course_modules, TableName_Users, TableName_ContentCreators, 
+                                              TableName_CC_Courses, TableName_CC_Course_Modules, couserId, address));
 
     let endTime = Math.floor(Date.now());
     console.log("userTableLand: getContentCreatorCourseModules: entry time: " + (endTime - startTime));

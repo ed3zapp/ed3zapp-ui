@@ -99,7 +99,7 @@ const ContentCreatorCourses = () => {
         console.log("we got the ID: " + tb_contentCreatorId)
         console.log("Fetch Courses Call.....");
         startTime = Math.floor(Date.now());
-        const newCourses = await getContentCreatorCourses(provider, tb_contentCreatorId);
+        const newCourses = await getContentCreatorCourses(provider, wallet);
         endTime = Math.floor(Date.now());
         console.log("ContentCreatorCourses: Time to get content creator courses: " + (endTime - startTime));
 
@@ -153,8 +153,7 @@ const ContentCreatorCourses = () => {
                     }}
                 />
             </Grid>
-            {isContentCreator ?
-             <>
+              <>
               {courses !== null && courses.rows.map((data) => {
                 const randRating = Math.floor(Math.random() * (5 - 2 + 1)) + 2;
                 const randReview = Math.floor(Math.random() * (40 - 5 + 1)) + 5;
@@ -235,13 +234,6 @@ const ContentCreatorCourses = () => {
                   </CardActionArea>
               </Grid>
              </> 
-             : 
-             <>
-              <Typography variant='caption' sx={{ color: 'text.disabled' }}>
-                This section is only for Content Creators
-              </Typography>
-             </>}
-            
         </Grid>
         <Grid item xs={12} md={3}>
             <AddNewCourseForm contentCreatorId={contentCreatorId} 
