@@ -1,0 +1,1961 @@
+{
+  "contractName": "CFALibraryMock",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "contract ISuperfluid",
+          "name": "host",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "cfaV1",
+      "outputs": [
+        {
+          "internalType": "contract ISuperfluid",
+          "name": "host",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IConstantFlowAgreementV1",
+          "name": "cfa",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.13+commit.abaa5c0e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract ISuperfluid\",\"name\":\"host\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"cfaV1\",\"outputs\":[{\"internalType\":\"contract ISuperfluid\",\"name\":\"host\",\"type\":\"address\"},{\"internalType\":\"contract IConstantFlowAgreementV1\",\"name\":\"cfa\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/CFALibraryMock.sol\":\"CFALibraryMock\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1500},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34\",\"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr\"]},\"@openzeppelin/contracts/token/ERC777/IERC777.sol\":{\"keccak256\":\"0x093eaf9a4b05adf2bd3730b753f9e1725ed34b80ea4b5f08477ff2f46a188586\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://46e9a9b37e8cb6332ed21a8d3f8a6723d897e4a97db63095424522a80b3cfc15\",\"dweb:/ipfs/QmdHcBPPGKQBnmeaAN3Y6YKUPqwR73RrHTiX5uTr6eVx1M\"]},\"@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol\":{\"keccak256\":\"0x5384b9a56711ce7b72405c653ff8be3bb94131428919b380248e10f1ddb252de\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://979aa0e84f86851125d7ad79d7f974681c91680139e65ae426fee12671f81ca0\",\"dweb:/ipfs/QmVk59WkCeqaUVRBeiCfftVstSXugXgyXMurEeAicAx3du\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol\":{\"keccak256\":\"0x6b8501cde10ce06296268facb2b504765995eeb948434dbb6292b30e0852a757\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://0ea0a9865ca170dd4b8dd63d298b8b0dc73910242dad0ce567e6a68400c0df0f\",\"dweb:/ipfs/QmfUy1FXn6a6JZW4qE3RUudD1fH7BErNTDTgEPwEcdWCVg\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol\":{\"keccak256\":\"0x78f553c8b63ca0b8ca892e3461aeb2d176f0b5e574ae0ea616bbb70d33d5e5f2\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://f2e9a8f5df9cf5b8326cefa666abc21c41fd09fd4ea3fd73a55b1346fa1693e8\",\"dweb:/ipfs/QmPNrMzHNpE97SwHwjXhHCttKQQSt2oYUforvPenVuemRJ\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol\":{\"keccak256\":\"0x9b4fab6dcac1337f78e04d67d8c2b48b1de8bd4bbf14b475840f9dbda7b8f21e\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://cc2f3629ad0cb46bd4f595880591ad6c9d75a82d920cb9355e462fbf8022c820\",\"dweb:/ipfs/QmXMovxK4qpWT4yffXxUVjkMNwxEfS6mtn39mLSmjaxEdW\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol\":{\"keccak256\":\"0x6cc4b0724d977190c7441dfc3be6c6e48b43b555c3370af32ef5b6600f15f53f\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://3e89c944642772a42429f21a11017b57deb98a9198f8e4f8749f00aaee71299e\",\"dweb:/ipfs/QmaSv9GvqikcGHJ3tcwATDHSpQw6mfnHPDtcfqcZSS7LF6\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol\":{\"keccak256\":\"0x84bb6579908dcb80621e089da34eac2a06856a90bc384710a7c8df07a70d0995\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://3809d93a1cfacdec425c277c519db137b86691459533956ecd18120bfb801ed0\",\"dweb:/ipfs/Qmc66ovCtVYANKH76iv8a58u1FQ3yKVKBVbK1aVk2RZzRT\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol\":{\"keccak256\":\"0xb50180797117711b1ecf7adf628892016ad864d2321bfaf7eaf43901b5394946\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://4121ed7bf52de22702cc42972fecb37c7d0461834ab3c601b32dc737789fde4c\",\"dweb:/ipfs/QmaU1EWAzfzmiazMfuSJMybKMVpyoc6DyUPJpxQCc8UCxb\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol\":{\"keccak256\":\"0x41464648136cbcd34b7df28471eca470f67c80409b2ac01b202ac7092ead4890\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://3dc4cf90b882903e91a0086268a09b541ac0255d6a872a97de3cd81b1ee14885\",\"dweb:/ipfs/QmbF1HfpQ854hhmjc5xqiauevFEZhKWMFHUgDTH1VZXrkQ\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol\":{\"keccak256\":\"0x647f623df16dfb57d0d380bf6aada5f1d9bcca88ac0ea4f998d7159ba8da95e1\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://95d49cf7a3b14214ad231746171d02c0019bc0ef291250f2d68998c7de82069a\",\"dweb:/ipfs/QmbSUAHoEA8iMres2heL2wCnKSRruD92Qd3eMNzr4w8kMW\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol\":{\"keccak256\":\"0xa94f5ad95da2716a21cf6a0c7861ce03ba70c6931cfc8a9bcae741881e489a99\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://2eee2bae93ce8aae1e75aed6153e3d46f2d0c3462f47d9a99713054fff71bc80\",\"dweb:/ipfs/QmVh5HDeJo3p4rUV45RVCBGFpEN2G3gwL7ADT73csPnj5Q\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol\":{\"keccak256\":\"0x55be78ffb441c782f612b153d7d9049e3f0dbfd412c1f7df29c896b972b2985f\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://a223c68e38a6c9b1e363e525911bc7eda44ea517865ae53bd0d34ff858cc02ae\",\"dweb:/ipfs/QmVruGehibG6Emr2A6JHwUnhd4NzsGkE24cbGqnDpEvrKh\"]},\"@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol\":{\"keccak256\":\"0x7456cd394cc905aae7cdbd4601ce1c296c768c13c28e66efbb913cc070bad3e4\",\"license\":\"AGPLv3\",\"urls\":[\"bzz-raw://5a6589b428b724721ba5b4dd196c8f366a6e694ef313add093f29af64496c042\",\"dweb:/ipfs/QmSMgV6y8L6pyyzDz6kKmafVwujNWcjTqutpCBxe4uNRqg\"]},\"project:/contracts/CFALibraryMock.sol\":{\"keccak256\":\"0xeb172195c920f056cb10aebbadbe9f62815e9a04dd93be2ce76e925883bd1066\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7f85b7a3f327d93f307313b4e59e201ef9f4055ec203153b514bbaacfd15df6e\",\"dweb:/ipfs/QmNxmULYrbp3DmTEHQQPS2Tv5b3jeB7gBcY1eW8ZMP1xcZ\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060405161024238038061024283398101604081905261002f9161013a565b604080518082018252600160a060020a03831680825291517fb6d200de0000000000000000000000000000000000000000000000000000000081527fa9214cc96615e0085d3bb077758db69497dc2dce3b2b1e97bc93c3d18d83efd360048201529091602083019163b6d200de90602401602060405180830381865afa1580156100bd573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906100e1919061013a565b600160a060020a03908116909152815160008054600160a060020a03199081169284169290921790556020909201516001805490931691161790555061015e565b600160a060020a038116811461013757600080fd5b50565b60006020828403121561014c57600080fd5b815161015781610122565b9392505050565b60d68061016c6000396000f3fe6080604052348015600f57600080fd5b50600436106044577c01000000000000000000000000000000000000000000000000000000006000350463d3112b2e81146049575b600080fd5b600054600154606f9173ffffffffffffffffffffffffffffffffffffffff908116911682565b6040805173ffffffffffffffffffffffffffffffffffffffff93841681529290911660208301520160405180910390f3fea264697066735822122072a730762e35edeefd4a88d1a92d4b8062643f7b86bc8bbd2930f58c47fe1d2364736f6c634300080d0033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b50600436106044577c01000000000000000000000000000000000000000000000000000000006000350463d3112b2e81146049575b600080fd5b600054600154606f9173ffffffffffffffffffffffffffffffffffffffff908116911682565b6040805173ffffffffffffffffffffffffffffffffffffffff93841681529290911660208301520160405180910390f3fea264697066735822122072a730762e35edeefd4a88d1a92d4b8062643f7b86bc8bbd2930f58c47fe1d2364736f6c634300080d0033",
+  "immutableReferences": {},
+  "generatedSources": [
+    {
+      "ast": {
+        "nodeType": "YulBlock",
+        "src": "0:924:15",
+        "statements": [
+          {
+            "nodeType": "YulBlock",
+            "src": "6:3:15",
+            "statements": []
+          },
+          {
+            "body": {
+              "nodeType": "YulBlock",
+              "src": "72:86:15",
+              "statements": [
+                {
+                  "body": {
+                    "nodeType": "YulBlock",
+                    "src": "136:16:15",
+                    "statements": [
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "145:1:15",
+                              "type": "",
+                              "value": "0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "148:1:15",
+                              "type": "",
+                              "value": "0"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "revert",
+                            "nodeType": "YulIdentifier",
+                            "src": "138:6:15"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "138:12:15"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "138:12:15"
+                      }
+                    ]
+                  },
+                  "condition": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "name": "value",
+                            "nodeType": "YulIdentifier",
+                            "src": "95:5:15"
+                          },
+                          {
+                            "arguments": [
+                              {
+                                "name": "value",
+                                "nodeType": "YulIdentifier",
+                                "src": "106:5:15"
+                              },
+                              {
+                                "arguments": [
+                                  {
+                                    "arguments": [
+                                      {
+                                        "kind": "number",
+                                        "nodeType": "YulLiteral",
+                                        "src": "121:1:15",
+                                        "type": "",
+                                        "value": "2"
+                                      },
+                                      {
+                                        "kind": "number",
+                                        "nodeType": "YulLiteral",
+                                        "src": "124:3:15",
+                                        "type": "",
+                                        "value": "160"
+                                      }
+                                    ],
+                                    "functionName": {
+                                      "name": "exp",
+                                      "nodeType": "YulIdentifier",
+                                      "src": "117:3:15"
+                                    },
+                                    "nodeType": "YulFunctionCall",
+                                    "src": "117:11:15"
+                                  },
+                                  {
+                                    "kind": "number",
+                                    "nodeType": "YulLiteral",
+                                    "src": "130:1:15",
+                                    "type": "",
+                                    "value": "1"
+                                  }
+                                ],
+                                "functionName": {
+                                  "name": "sub",
+                                  "nodeType": "YulIdentifier",
+                                  "src": "113:3:15"
+                                },
+                                "nodeType": "YulFunctionCall",
+                                "src": "113:19:15"
+                              }
+                            ],
+                            "functionName": {
+                              "name": "and",
+                              "nodeType": "YulIdentifier",
+                              "src": "102:3:15"
+                            },
+                            "nodeType": "YulFunctionCall",
+                            "src": "102:31:15"
+                          }
+                        ],
+                        "functionName": {
+                          "name": "eq",
+                          "nodeType": "YulIdentifier",
+                          "src": "92:2:15"
+                        },
+                        "nodeType": "YulFunctionCall",
+                        "src": "92:42:15"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "iszero",
+                      "nodeType": "YulIdentifier",
+                      "src": "85:6:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "85:50:15"
+                  },
+                  "nodeType": "YulIf",
+                  "src": "82:70:15"
+                }
+              ]
+            },
+            "name": "validator_revert_contract_ISuperfluid",
+            "nodeType": "YulFunctionDefinition",
+            "parameters": [
+              {
+                "name": "value",
+                "nodeType": "YulTypedName",
+                "src": "61:5:15",
+                "type": ""
+              }
+            ],
+            "src": "14:144:15"
+          },
+          {
+            "body": {
+              "nodeType": "YulBlock",
+              "src": "264:183:15",
+              "statements": [
+                {
+                  "body": {
+                    "nodeType": "YulBlock",
+                    "src": "310:16:15",
+                    "statements": [
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "319:1:15",
+                              "type": "",
+                              "value": "0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "322:1:15",
+                              "type": "",
+                              "value": "0"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "revert",
+                            "nodeType": "YulIdentifier",
+                            "src": "312:6:15"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "312:12:15"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "312:12:15"
+                      }
+                    ]
+                  },
+                  "condition": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "name": "dataEnd",
+                            "nodeType": "YulIdentifier",
+                            "src": "285:7:15"
+                          },
+                          {
+                            "name": "headStart",
+                            "nodeType": "YulIdentifier",
+                            "src": "294:9:15"
+                          }
+                        ],
+                        "functionName": {
+                          "name": "sub",
+                          "nodeType": "YulIdentifier",
+                          "src": "281:3:15"
+                        },
+                        "nodeType": "YulFunctionCall",
+                        "src": "281:23:15"
+                      },
+                      {
+                        "kind": "number",
+                        "nodeType": "YulLiteral",
+                        "src": "306:2:15",
+                        "type": "",
+                        "value": "32"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "slt",
+                      "nodeType": "YulIdentifier",
+                      "src": "277:3:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "277:32:15"
+                  },
+                  "nodeType": "YulIf",
+                  "src": "274:52:15"
+                },
+                {
+                  "nodeType": "YulVariableDeclaration",
+                  "src": "335:29:15",
+                  "value": {
+                    "arguments": [
+                      {
+                        "name": "headStart",
+                        "nodeType": "YulIdentifier",
+                        "src": "354:9:15"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "mload",
+                      "nodeType": "YulIdentifier",
+                      "src": "348:5:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "348:16:15"
+                  },
+                  "variables": [
+                    {
+                      "name": "value",
+                      "nodeType": "YulTypedName",
+                      "src": "339:5:15",
+                      "type": ""
+                    }
+                  ]
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "name": "value",
+                        "nodeType": "YulIdentifier",
+                        "src": "411:5:15"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "validator_revert_contract_ISuperfluid",
+                      "nodeType": "YulIdentifier",
+                      "src": "373:37:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "373:44:15"
+                  },
+                  "nodeType": "YulExpressionStatement",
+                  "src": "373:44:15"
+                },
+                {
+                  "nodeType": "YulAssignment",
+                  "src": "426:15:15",
+                  "value": {
+                    "name": "value",
+                    "nodeType": "YulIdentifier",
+                    "src": "436:5:15"
+                  },
+                  "variableNames": [
+                    {
+                      "name": "value0",
+                      "nodeType": "YulIdentifier",
+                      "src": "426:6:15"
+                    }
+                  ]
+                }
+              ]
+            },
+            "name": "abi_decode_tuple_t_contract$_ISuperfluid_$3520_fromMemory",
+            "nodeType": "YulFunctionDefinition",
+            "parameters": [
+              {
+                "name": "headStart",
+                "nodeType": "YulTypedName",
+                "src": "230:9:15",
+                "type": ""
+              },
+              {
+                "name": "dataEnd",
+                "nodeType": "YulTypedName",
+                "src": "241:7:15",
+                "type": ""
+              }
+            ],
+            "returnVariables": [
+              {
+                "name": "value0",
+                "nodeType": "YulTypedName",
+                "src": "253:6:15",
+                "type": ""
+              }
+            ],
+            "src": "163:284:15"
+          },
+          {
+            "body": {
+              "nodeType": "YulBlock",
+              "src": "553:76:15",
+              "statements": [
+                {
+                  "nodeType": "YulAssignment",
+                  "src": "563:26:15",
+                  "value": {
+                    "arguments": [
+                      {
+                        "name": "headStart",
+                        "nodeType": "YulIdentifier",
+                        "src": "575:9:15"
+                      },
+                      {
+                        "kind": "number",
+                        "nodeType": "YulLiteral",
+                        "src": "586:2:15",
+                        "type": "",
+                        "value": "32"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "add",
+                      "nodeType": "YulIdentifier",
+                      "src": "571:3:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "571:18:15"
+                  },
+                  "variableNames": [
+                    {
+                      "name": "tail",
+                      "nodeType": "YulIdentifier",
+                      "src": "563:4:15"
+                    }
+                  ]
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "name": "headStart",
+                        "nodeType": "YulIdentifier",
+                        "src": "605:9:15"
+                      },
+                      {
+                        "name": "value0",
+                        "nodeType": "YulIdentifier",
+                        "src": "616:6:15"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "mstore",
+                      "nodeType": "YulIdentifier",
+                      "src": "598:6:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "598:25:15"
+                  },
+                  "nodeType": "YulExpressionStatement",
+                  "src": "598:25:15"
+                }
+              ]
+            },
+            "name": "abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed",
+            "nodeType": "YulFunctionDefinition",
+            "parameters": [
+              {
+                "name": "headStart",
+                "nodeType": "YulTypedName",
+                "src": "522:9:15",
+                "type": ""
+              },
+              {
+                "name": "value0",
+                "nodeType": "YulTypedName",
+                "src": "533:6:15",
+                "type": ""
+              }
+            ],
+            "returnVariables": [
+              {
+                "name": "tail",
+                "nodeType": "YulTypedName",
+                "src": "544:4:15",
+                "type": ""
+              }
+            ],
+            "src": "452:177:15"
+          },
+          {
+            "body": {
+              "nodeType": "YulBlock",
+              "src": "739:183:15",
+              "statements": [
+                {
+                  "body": {
+                    "nodeType": "YulBlock",
+                    "src": "785:16:15",
+                    "statements": [
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "794:1:15",
+                              "type": "",
+                              "value": "0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "797:1:15",
+                              "type": "",
+                              "value": "0"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "revert",
+                            "nodeType": "YulIdentifier",
+                            "src": "787:6:15"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "787:12:15"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "787:12:15"
+                      }
+                    ]
+                  },
+                  "condition": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "name": "dataEnd",
+                            "nodeType": "YulIdentifier",
+                            "src": "760:7:15"
+                          },
+                          {
+                            "name": "headStart",
+                            "nodeType": "YulIdentifier",
+                            "src": "769:9:15"
+                          }
+                        ],
+                        "functionName": {
+                          "name": "sub",
+                          "nodeType": "YulIdentifier",
+                          "src": "756:3:15"
+                        },
+                        "nodeType": "YulFunctionCall",
+                        "src": "756:23:15"
+                      },
+                      {
+                        "kind": "number",
+                        "nodeType": "YulLiteral",
+                        "src": "781:2:15",
+                        "type": "",
+                        "value": "32"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "slt",
+                      "nodeType": "YulIdentifier",
+                      "src": "752:3:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "752:32:15"
+                  },
+                  "nodeType": "YulIf",
+                  "src": "749:52:15"
+                },
+                {
+                  "nodeType": "YulVariableDeclaration",
+                  "src": "810:29:15",
+                  "value": {
+                    "arguments": [
+                      {
+                        "name": "headStart",
+                        "nodeType": "YulIdentifier",
+                        "src": "829:9:15"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "mload",
+                      "nodeType": "YulIdentifier",
+                      "src": "823:5:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "823:16:15"
+                  },
+                  "variables": [
+                    {
+                      "name": "value",
+                      "nodeType": "YulTypedName",
+                      "src": "814:5:15",
+                      "type": ""
+                    }
+                  ]
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "name": "value",
+                        "nodeType": "YulIdentifier",
+                        "src": "886:5:15"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "validator_revert_contract_ISuperfluid",
+                      "nodeType": "YulIdentifier",
+                      "src": "848:37:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "848:44:15"
+                  },
+                  "nodeType": "YulExpressionStatement",
+                  "src": "848:44:15"
+                },
+                {
+                  "nodeType": "YulAssignment",
+                  "src": "901:15:15",
+                  "value": {
+                    "name": "value",
+                    "nodeType": "YulIdentifier",
+                    "src": "911:5:15"
+                  },
+                  "variableNames": [
+                    {
+                      "name": "value0",
+                      "nodeType": "YulIdentifier",
+                      "src": "901:6:15"
+                    }
+                  ]
+                }
+              ]
+            },
+            "name": "abi_decode_tuple_t_contract$_ISuperAgreement_$2416_fromMemory",
+            "nodeType": "YulFunctionDefinition",
+            "parameters": [
+              {
+                "name": "headStart",
+                "nodeType": "YulTypedName",
+                "src": "705:9:15",
+                "type": ""
+              },
+              {
+                "name": "dataEnd",
+                "nodeType": "YulTypedName",
+                "src": "716:7:15",
+                "type": ""
+              }
+            ],
+            "returnVariables": [
+              {
+                "name": "value0",
+                "nodeType": "YulTypedName",
+                "src": "728:6:15",
+                "type": ""
+              }
+            ],
+            "src": "634:288:15"
+          }
+        ]
+      },
+      "contents": "{\n    { }\n    function validator_revert_contract_ISuperfluid(value)\n    {\n        if iszero(eq(value, and(value, sub(exp(2, 160), 1)))) { revert(0, 0) }\n    }\n    function abi_decode_tuple_t_contract$_ISuperfluid_$3520_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := mload(headStart)\n        validator_revert_contract_ISuperfluid(value)\n        value0 := value\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_decode_tuple_t_contract$_ISuperAgreement_$2416_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n        let value := mload(headStart)\n        validator_revert_contract_ISuperfluid(value)\n        value0 := value\n    }\n}",
+      "id": 15,
+      "language": "Yul",
+      "name": "#utility.yul"
+    }
+  ],
+  "deployedGeneratedSources": [
+    {
+      "ast": {
+        "nodeType": "YulBlock",
+        "src": "0:396:15",
+        "statements": [
+          {
+            "nodeType": "YulBlock",
+            "src": "6:3:15",
+            "statements": []
+          },
+          {
+            "body": {
+              "nodeType": "YulBlock",
+              "src": "196:198:15",
+              "statements": [
+                {
+                  "nodeType": "YulAssignment",
+                  "src": "206:26:15",
+                  "value": {
+                    "arguments": [
+                      {
+                        "name": "headStart",
+                        "nodeType": "YulIdentifier",
+                        "src": "218:9:15"
+                      },
+                      {
+                        "kind": "number",
+                        "nodeType": "YulLiteral",
+                        "src": "229:2:15",
+                        "type": "",
+                        "value": "64"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "add",
+                      "nodeType": "YulIdentifier",
+                      "src": "214:3:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "214:18:15"
+                  },
+                  "variableNames": [
+                    {
+                      "name": "tail",
+                      "nodeType": "YulIdentifier",
+                      "src": "206:4:15"
+                    }
+                  ]
+                },
+                {
+                  "nodeType": "YulVariableDeclaration",
+                  "src": "241:52:15",
+                  "value": {
+                    "kind": "number",
+                    "nodeType": "YulLiteral",
+                    "src": "251:42:15",
+                    "type": "",
+                    "value": "0xffffffffffffffffffffffffffffffffffffffff"
+                  },
+                  "variables": [
+                    {
+                      "name": "_1",
+                      "nodeType": "YulTypedName",
+                      "src": "245:2:15",
+                      "type": ""
+                    }
+                  ]
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "name": "headStart",
+                        "nodeType": "YulIdentifier",
+                        "src": "309:9:15"
+                      },
+                      {
+                        "arguments": [
+                          {
+                            "name": "value0",
+                            "nodeType": "YulIdentifier",
+                            "src": "324:6:15"
+                          },
+                          {
+                            "name": "_1",
+                            "nodeType": "YulIdentifier",
+                            "src": "332:2:15"
+                          }
+                        ],
+                        "functionName": {
+                          "name": "and",
+                          "nodeType": "YulIdentifier",
+                          "src": "320:3:15"
+                        },
+                        "nodeType": "YulFunctionCall",
+                        "src": "320:15:15"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "mstore",
+                      "nodeType": "YulIdentifier",
+                      "src": "302:6:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "302:34:15"
+                  },
+                  "nodeType": "YulExpressionStatement",
+                  "src": "302:34:15"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "name": "headStart",
+                            "nodeType": "YulIdentifier",
+                            "src": "356:9:15"
+                          },
+                          {
+                            "kind": "number",
+                            "nodeType": "YulLiteral",
+                            "src": "367:2:15",
+                            "type": "",
+                            "value": "32"
+                          }
+                        ],
+                        "functionName": {
+                          "name": "add",
+                          "nodeType": "YulIdentifier",
+                          "src": "352:3:15"
+                        },
+                        "nodeType": "YulFunctionCall",
+                        "src": "352:18:15"
+                      },
+                      {
+                        "arguments": [
+                          {
+                            "name": "value1",
+                            "nodeType": "YulIdentifier",
+                            "src": "376:6:15"
+                          },
+                          {
+                            "name": "_1",
+                            "nodeType": "YulIdentifier",
+                            "src": "384:2:15"
+                          }
+                        ],
+                        "functionName": {
+                          "name": "and",
+                          "nodeType": "YulIdentifier",
+                          "src": "372:3:15"
+                        },
+                        "nodeType": "YulFunctionCall",
+                        "src": "372:15:15"
+                      }
+                    ],
+                    "functionName": {
+                      "name": "mstore",
+                      "nodeType": "YulIdentifier",
+                      "src": "345:6:15"
+                    },
+                    "nodeType": "YulFunctionCall",
+                    "src": "345:43:15"
+                  },
+                  "nodeType": "YulExpressionStatement",
+                  "src": "345:43:15"
+                }
+              ]
+            },
+            "name": "abi_encode_tuple_t_contract$_ISuperfluid_$3520_t_contract$_IConstantFlowAgreementV1_$1790__to_t_address_t_address__fromStack_reversed",
+            "nodeType": "YulFunctionDefinition",
+            "parameters": [
+              {
+                "name": "headStart",
+                "nodeType": "YulTypedName",
+                "src": "157:9:15",
+                "type": ""
+              },
+              {
+                "name": "value1",
+                "nodeType": "YulTypedName",
+                "src": "168:6:15",
+                "type": ""
+              },
+              {
+                "name": "value0",
+                "nodeType": "YulTypedName",
+                "src": "176:6:15",
+                "type": ""
+              }
+            ],
+            "returnVariables": [
+              {
+                "name": "tail",
+                "nodeType": "YulTypedName",
+                "src": "187:4:15",
+                "type": ""
+              }
+            ],
+            "src": "14:380:15"
+          }
+        ]
+      },
+      "contents": "{\n    { }\n    function abi_encode_tuple_t_contract$_ISuperfluid_$3520_t_contract$_IConstantFlowAgreementV1_$1790__to_t_address_t_address__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        let _1 := 0xffffffffffffffffffffffffffffffffffffffff\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n    }\n}",
+      "id": 15,
+      "language": "Yul",
+      "name": "#utility.yul"
+    }
+  ],
+  "sourceMap": "448:682:14:-:0;;;618:469;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;743:336;;;;;;;;-1:-1:-1;;;;;743:336:14;;;;;917:135;;;;;962:71;917:135;;;598:25:15;743:336:14;;;;;;917:22;;571:18:15;;917:135:14;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;-1:-1:-1;;;;;743:336:14;;;;;;735:344;;:5;:344;;-1:-1:-1;;;;;;735:344:14;;;;;;;;;;;;;;;;;-1:-1:-1;735:344:14;;;;;;;;;;-1:-1:-1;448:682:14;;14:144:15;-1:-1:-1;;;;;102:31:15;;92:42;;82:70;;148:1;145;138:12;82:70;14:144;:::o;163:284::-;253:6;306:2;294:9;285:7;281:23;277:32;274:52;;;322:1;319;312:12;274:52;354:9;348:16;373:44;411:5;373:44;:::i;:::-;436:5;163:284;-1:-1:-1;;;163:284:15:o;634:288::-;448:682:14;;;;;;",
+  "deployedSourceMap": "448:682:14:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;571:34;;;;;;;;;;;;;;;;;;;251:42:15;320:15;;;302:34;;372:15;;;;367:2;352:18;;345:43;214:18;571:34:14;;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.13;\r\n\r\nimport {ISuperfluid } from \"@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol\";\r\n\r\nimport { \r\n    IConstantFlowAgreementV1 \r\n} from \"@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol\";\r\n\r\nimport {\r\n    CFAv1Library\r\n} from \"@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol\";\r\n\r\ncontract CFALibraryMock {\r\n\r\n    using CFAv1Library for CFAv1Library.InitData;\r\n    \r\n    //initialize cfaV1 variable\r\n    CFAv1Library.InitData public cfaV1;\r\n    \r\n    constructor(\r\n        ISuperfluid host\r\n    ) {\r\n    \r\n    //initialize InitData struct, and set equal to cfaV1\r\n    cfaV1 = CFAv1Library.InitData(\r\n        host,\r\n        //here, we are deriving the address of the CFA using the host contract\r\n        IConstantFlowAgreementV1(\r\n            address(host.getAgreementClass(\r\n                    keccak256(\"org.superfluid-finance.agreements.ConstantFlowAgreement.v1\")\r\n                ))\r\n            )\r\n        );\r\n    }\r\n    \r\n    //your contract code here...\r\n}",
+  "sourcePath": "/mnt/c/blockchainrepo/upload/ed3zapp-core/contracts/CFALibraryMock.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/CFALibraryMock.sol",
+    "exportedSymbols": {
+      "CFALibraryMock": [
+        4000
+      ],
+      "CFAv1Library": [
+        1420
+      ],
+      "IConstantFlowAgreementV1": [
+        1790
+      ],
+      "ISuperfluid": [
+        3520
+      ]
+    },
+    "id": 4001,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3961,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:24:14"
+      },
+      {
+        "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "file": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "id": 3963,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 4001,
+        "sourceUnit": 3521,
+        "src": "61:116:14",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 3962,
+              "name": "ISuperfluid",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 3520,
+              "src": "69:11:14",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "file": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "id": 3965,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 4001,
+        "sourceUnit": 1791,
+        "src": "181:151:14",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 3964,
+              "name": "IConstantFlowAgreementV1",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 1790,
+              "src": "196:24:14",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol",
+        "file": "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol",
+        "id": 3967,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 4001,
+        "sourceUnit": 1421,
+        "src": "336:108:14",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 3966,
+              "name": "CFAv1Library",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 1420,
+              "src": "350:12:14",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "CFALibraryMock",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 4000,
+        "linearizedBaseContracts": [
+          4000
+        ],
+        "name": "CFALibraryMock",
+        "nameLocation": "457:14:14",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "global": false,
+            "id": 3971,
+            "libraryName": {
+              "id": 3968,
+              "name": "CFAv1Library",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 1420,
+              "src": "487:12:14"
+            },
+            "nodeType": "UsingForDirective",
+            "src": "481:45:14",
+            "typeName": {
+              "id": 3970,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 3969,
+                "name": "CFAv1Library.InitData",
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 255,
+                "src": "504:21:14"
+              },
+              "referencedDeclaration": 255,
+              "src": "504:21:14",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_InitData_$255_storage_ptr",
+                "typeString": "struct CFAv1Library.InitData"
+              }
+            }
+          },
+          {
+            "constant": false,
+            "functionSelector": "d3112b2e",
+            "id": 3974,
+            "mutability": "mutable",
+            "name": "cfaV1",
+            "nameLocation": "600:5:14",
+            "nodeType": "VariableDeclaration",
+            "scope": 4000,
+            "src": "571:34:14",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_InitData_$255_storage",
+              "typeString": "struct CFAv1Library.InitData"
+            },
+            "typeName": {
+              "id": 3973,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 3972,
+                "name": "CFAv1Library.InitData",
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 255,
+                "src": "571:21:14"
+              },
+              "referencedDeclaration": 255,
+              "src": "571:21:14",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_InitData_$255_storage_ptr",
+                "typeString": "struct CFAv1Library.InitData"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 3998,
+              "nodeType": "Block",
+              "src": "664:423:14",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 3996,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 3980,
+                      "name": "cfaV1",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3974,
+                      "src": "735:5:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_InitData_$255_storage",
+                        "typeString": "struct CFAv1Library.InitData storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "id": 3983,
+                          "name": "host",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3977,
+                          "src": "775:4:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_ISuperfluid_$3520",
+                            "typeString": "contract ISuperfluid"
+                          }
+                        },
+                        {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "arguments": [
+                                    {
+                                      "arguments": [
+                                        {
+                                          "hexValue": "6f72672e7375706572666c7569642d66696e616e63652e61677265656d656e74732e436f6e7374616e74466c6f7741677265656d656e742e7631",
+                                          "id": 3990,
+                                          "isConstant": false,
+                                          "isLValue": false,
+                                          "isPure": true,
+                                          "kind": "string",
+                                          "lValueRequested": false,
+                                          "nodeType": "Literal",
+                                          "src": "972:60:14",
+                                          "typeDescriptions": {
+                                            "typeIdentifier": "t_stringliteral_a9214cc96615e0085d3bb077758db69497dc2dce3b2b1e97bc93c3d18d83efd3",
+                                            "typeString": "literal_string \"org.superfluid-finance.agreements.ConstantFlowAgreement.v1\""
+                                          },
+                                          "value": "org.superfluid-finance.agreements.ConstantFlowAgreement.v1"
+                                        }
+                                      ],
+                                      "expression": {
+                                        "argumentTypes": [
+                                          {
+                                            "typeIdentifier": "t_stringliteral_a9214cc96615e0085d3bb077758db69497dc2dce3b2b1e97bc93c3d18d83efd3",
+                                            "typeString": "literal_string \"org.superfluid-finance.agreements.ConstantFlowAgreement.v1\""
+                                          }
+                                        ],
+                                        "id": 3989,
+                                        "name": "keccak256",
+                                        "nodeType": "Identifier",
+                                        "overloadedDeclarations": [],
+                                        "referencedDeclaration": 4294967288,
+                                        "src": "962:9:14",
+                                        "typeDescriptions": {
+                                          "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                                          "typeString": "function (bytes memory) pure returns (bytes32)"
+                                        }
+                                      },
+                                      "id": 3991,
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": true,
+                                      "kind": "functionCall",
+                                      "lValueRequested": false,
+                                      "names": [],
+                                      "nodeType": "FunctionCall",
+                                      "src": "962:71:14",
+                                      "tryCall": false,
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                      }
+                                    }
+                                  ],
+                                  "expression": {
+                                    "argumentTypes": [
+                                      {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                      }
+                                    ],
+                                    "expression": {
+                                      "id": 3987,
+                                      "name": "host",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 3977,
+                                      "src": "917:4:14",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_contract$_ISuperfluid_$3520",
+                                        "typeString": "contract ISuperfluid"
+                                      }
+                                    },
+                                    "id": 3988,
+                                    "isConstant": false,
+                                    "isLValue": false,
+                                    "isPure": false,
+                                    "lValueRequested": false,
+                                    "memberName": "getAgreementClass",
+                                    "nodeType": "MemberAccess",
+                                    "referencedDeclaration": 3157,
+                                    "src": "917:22:14",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_function_external_view$_t_bytes32_$returns$_t_contract$_ISuperAgreement_$2416_$",
+                                      "typeString": "function (bytes32) view external returns (contract ISuperAgreement)"
+                                    }
+                                  },
+                                  "id": 3992,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "kind": "functionCall",
+                                  "lValueRequested": false,
+                                  "names": [],
+                                  "nodeType": "FunctionCall",
+                                  "src": "917:135:14",
+                                  "tryCall": false,
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_contract$_ISuperAgreement_$2416",
+                                    "typeString": "contract ISuperAgreement"
+                                  }
+                                }
+                              ],
+                              "expression": {
+                                "argumentTypes": [
+                                  {
+                                    "typeIdentifier": "t_contract$_ISuperAgreement_$2416",
+                                    "typeString": "contract ISuperAgreement"
+                                  }
+                                ],
+                                "id": 3986,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": true,
+                                "lValueRequested": false,
+                                "nodeType": "ElementaryTypeNameExpression",
+                                "src": "909:7:14",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_type$_t_address_$",
+                                  "typeString": "type(address)"
+                                },
+                                "typeName": {
+                                  "id": 3985,
+                                  "name": "address",
+                                  "nodeType": "ElementaryTypeName",
+                                  "src": "909:7:14",
+                                  "typeDescriptions": {}
+                                }
+                              },
+                              "id": 3993,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "kind": "typeConversion",
+                              "lValueRequested": false,
+                              "names": [],
+                              "nodeType": "FunctionCall",
+                              "src": "909:144:14",
+                              "tryCall": false,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            ],
+                            "id": 3984,
+                            "name": "IConstantFlowAgreementV1",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1790,
+                            "src": "870:24:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_contract$_IConstantFlowAgreementV1_$1790_$",
+                              "typeString": "type(contract IConstantFlowAgreementV1)"
+                            }
+                          },
+                          "id": 3994,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "870:198:14",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_IConstantFlowAgreementV1_$1790",
+                            "typeString": "contract IConstantFlowAgreementV1"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_contract$_ISuperfluid_$3520",
+                            "typeString": "contract ISuperfluid"
+                          },
+                          {
+                            "typeIdentifier": "t_contract$_IConstantFlowAgreementV1_$1790",
+                            "typeString": "contract IConstantFlowAgreementV1"
+                          }
+                        ],
+                        "expression": {
+                          "id": 3981,
+                          "name": "CFAv1Library",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1420,
+                          "src": "743:12:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_contract$_CFAv1Library_$1420_$",
+                            "typeString": "type(library CFAv1Library)"
+                          }
+                        },
+                        "id": 3982,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "InitData",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 255,
+                        "src": "743:21:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_struct$_InitData_$255_storage_ptr_$",
+                          "typeString": "type(struct CFAv1Library.InitData storage pointer)"
+                        }
+                      },
+                      "id": 3995,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "structConstructorCall",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "743:336:14",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_InitData_$255_memory_ptr",
+                        "typeString": "struct CFAv1Library.InitData memory"
+                      }
+                    },
+                    "src": "735:344:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_InitData_$255_storage",
+                      "typeString": "struct CFAv1Library.InitData storage ref"
+                    }
+                  },
+                  "id": 3997,
+                  "nodeType": "ExpressionStatement",
+                  "src": "735:344:14"
+                }
+              ]
+            },
+            "id": 3999,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3978,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3977,
+                  "mutability": "mutable",
+                  "name": "host",
+                  "nameLocation": "652:4:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3999,
+                  "src": "640:16:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ISuperfluid_$3520",
+                    "typeString": "contract ISuperfluid"
+                  },
+                  "typeName": {
+                    "id": 3976,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3975,
+                      "name": "ISuperfluid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3520,
+                      "src": "640:11:14"
+                    },
+                    "referencedDeclaration": 3520,
+                    "src": "640:11:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ISuperfluid_$3520",
+                      "typeString": "contract ISuperfluid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "629:34:14"
+            },
+            "returnParameters": {
+              "id": 3979,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "664:0:14"
+            },
+            "scope": 4000,
+            "src": "618:469:14",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 4001,
+        "src": "448:682:14",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:1097:14"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/CFALibraryMock.sol",
+    "exportedSymbols": {
+      "CFALibraryMock": [
+        4000
+      ],
+      "CFAv1Library": [
+        1420
+      ],
+      "IConstantFlowAgreementV1": [
+        1790
+      ],
+      "ISuperfluid": [
+        3520
+      ]
+    },
+    "id": 4001,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3961,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:24:14"
+      },
+      {
+        "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "file": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "id": 3963,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 4001,
+        "sourceUnit": 3521,
+        "src": "61:116:14",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 3962,
+              "name": "ISuperfluid",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 3520,
+              "src": "69:11:14",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "file": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "id": 3965,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 4001,
+        "sourceUnit": 1791,
+        "src": "181:151:14",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 3964,
+              "name": "IConstantFlowAgreementV1",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 1790,
+              "src": "196:24:14",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol",
+        "file": "@superfluid-finance/ethereum-contracts/contracts/apps/CFAv1Library.sol",
+        "id": 3967,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 4001,
+        "sourceUnit": 1421,
+        "src": "336:108:14",
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 3966,
+              "name": "CFAv1Library",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 1420,
+              "src": "350:12:14",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "CFALibraryMock",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 4000,
+        "linearizedBaseContracts": [
+          4000
+        ],
+        "name": "CFALibraryMock",
+        "nameLocation": "457:14:14",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "global": false,
+            "id": 3971,
+            "libraryName": {
+              "id": 3968,
+              "name": "CFAv1Library",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 1420,
+              "src": "487:12:14"
+            },
+            "nodeType": "UsingForDirective",
+            "src": "481:45:14",
+            "typeName": {
+              "id": 3970,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 3969,
+                "name": "CFAv1Library.InitData",
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 255,
+                "src": "504:21:14"
+              },
+              "referencedDeclaration": 255,
+              "src": "504:21:14",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_InitData_$255_storage_ptr",
+                "typeString": "struct CFAv1Library.InitData"
+              }
+            }
+          },
+          {
+            "constant": false,
+            "functionSelector": "d3112b2e",
+            "id": 3974,
+            "mutability": "mutable",
+            "name": "cfaV1",
+            "nameLocation": "600:5:14",
+            "nodeType": "VariableDeclaration",
+            "scope": 4000,
+            "src": "571:34:14",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_InitData_$255_storage",
+              "typeString": "struct CFAv1Library.InitData"
+            },
+            "typeName": {
+              "id": 3973,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 3972,
+                "name": "CFAv1Library.InitData",
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 255,
+                "src": "571:21:14"
+              },
+              "referencedDeclaration": 255,
+              "src": "571:21:14",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_InitData_$255_storage_ptr",
+                "typeString": "struct CFAv1Library.InitData"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 3998,
+              "nodeType": "Block",
+              "src": "664:423:14",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 3996,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 3980,
+                      "name": "cfaV1",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3974,
+                      "src": "735:5:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_InitData_$255_storage",
+                        "typeString": "struct CFAv1Library.InitData storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "id": 3983,
+                          "name": "host",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3977,
+                          "src": "775:4:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_ISuperfluid_$3520",
+                            "typeString": "contract ISuperfluid"
+                          }
+                        },
+                        {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "arguments": [
+                                    {
+                                      "arguments": [
+                                        {
+                                          "hexValue": "6f72672e7375706572666c7569642d66696e616e63652e61677265656d656e74732e436f6e7374616e74466c6f7741677265656d656e742e7631",
+                                          "id": 3990,
+                                          "isConstant": false,
+                                          "isLValue": false,
+                                          "isPure": true,
+                                          "kind": "string",
+                                          "lValueRequested": false,
+                                          "nodeType": "Literal",
+                                          "src": "972:60:14",
+                                          "typeDescriptions": {
+                                            "typeIdentifier": "t_stringliteral_a9214cc96615e0085d3bb077758db69497dc2dce3b2b1e97bc93c3d18d83efd3",
+                                            "typeString": "literal_string \"org.superfluid-finance.agreements.ConstantFlowAgreement.v1\""
+                                          },
+                                          "value": "org.superfluid-finance.agreements.ConstantFlowAgreement.v1"
+                                        }
+                                      ],
+                                      "expression": {
+                                        "argumentTypes": [
+                                          {
+                                            "typeIdentifier": "t_stringliteral_a9214cc96615e0085d3bb077758db69497dc2dce3b2b1e97bc93c3d18d83efd3",
+                                            "typeString": "literal_string \"org.superfluid-finance.agreements.ConstantFlowAgreement.v1\""
+                                          }
+                                        ],
+                                        "id": 3989,
+                                        "name": "keccak256",
+                                        "nodeType": "Identifier",
+                                        "overloadedDeclarations": [],
+                                        "referencedDeclaration": 4294967288,
+                                        "src": "962:9:14",
+                                        "typeDescriptions": {
+                                          "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                                          "typeString": "function (bytes memory) pure returns (bytes32)"
+                                        }
+                                      },
+                                      "id": 3991,
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": true,
+                                      "kind": "functionCall",
+                                      "lValueRequested": false,
+                                      "names": [],
+                                      "nodeType": "FunctionCall",
+                                      "src": "962:71:14",
+                                      "tryCall": false,
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                      }
+                                    }
+                                  ],
+                                  "expression": {
+                                    "argumentTypes": [
+                                      {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                      }
+                                    ],
+                                    "expression": {
+                                      "id": 3987,
+                                      "name": "host",
+                                      "nodeType": "Identifier",
+                                      "overloadedDeclarations": [],
+                                      "referencedDeclaration": 3977,
+                                      "src": "917:4:14",
+                                      "typeDescriptions": {
+                                        "typeIdentifier": "t_contract$_ISuperfluid_$3520",
+                                        "typeString": "contract ISuperfluid"
+                                      }
+                                    },
+                                    "id": 3988,
+                                    "isConstant": false,
+                                    "isLValue": false,
+                                    "isPure": false,
+                                    "lValueRequested": false,
+                                    "memberName": "getAgreementClass",
+                                    "nodeType": "MemberAccess",
+                                    "referencedDeclaration": 3157,
+                                    "src": "917:22:14",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_function_external_view$_t_bytes32_$returns$_t_contract$_ISuperAgreement_$2416_$",
+                                      "typeString": "function (bytes32) view external returns (contract ISuperAgreement)"
+                                    }
+                                  },
+                                  "id": 3992,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "kind": "functionCall",
+                                  "lValueRequested": false,
+                                  "names": [],
+                                  "nodeType": "FunctionCall",
+                                  "src": "917:135:14",
+                                  "tryCall": false,
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_contract$_ISuperAgreement_$2416",
+                                    "typeString": "contract ISuperAgreement"
+                                  }
+                                }
+                              ],
+                              "expression": {
+                                "argumentTypes": [
+                                  {
+                                    "typeIdentifier": "t_contract$_ISuperAgreement_$2416",
+                                    "typeString": "contract ISuperAgreement"
+                                  }
+                                ],
+                                "id": 3986,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": true,
+                                "lValueRequested": false,
+                                "nodeType": "ElementaryTypeNameExpression",
+                                "src": "909:7:14",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_type$_t_address_$",
+                                  "typeString": "type(address)"
+                                },
+                                "typeName": {
+                                  "id": 3985,
+                                  "name": "address",
+                                  "nodeType": "ElementaryTypeName",
+                                  "src": "909:7:14",
+                                  "typeDescriptions": {}
+                                }
+                              },
+                              "id": 3993,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "kind": "typeConversion",
+                              "lValueRequested": false,
+                              "names": [],
+                              "nodeType": "FunctionCall",
+                              "src": "909:144:14",
+                              "tryCall": false,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            ],
+                            "id": 3984,
+                            "name": "IConstantFlowAgreementV1",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 1790,
+                            "src": "870:24:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_contract$_IConstantFlowAgreementV1_$1790_$",
+                              "typeString": "type(contract IConstantFlowAgreementV1)"
+                            }
+                          },
+                          "id": 3994,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "870:198:14",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_contract$_IConstantFlowAgreementV1_$1790",
+                            "typeString": "contract IConstantFlowAgreementV1"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_contract$_ISuperfluid_$3520",
+                            "typeString": "contract ISuperfluid"
+                          },
+                          {
+                            "typeIdentifier": "t_contract$_IConstantFlowAgreementV1_$1790",
+                            "typeString": "contract IConstantFlowAgreementV1"
+                          }
+                        ],
+                        "expression": {
+                          "id": 3981,
+                          "name": "CFAv1Library",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 1420,
+                          "src": "743:12:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_contract$_CFAv1Library_$1420_$",
+                            "typeString": "type(library CFAv1Library)"
+                          }
+                        },
+                        "id": 3982,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "InitData",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 255,
+                        "src": "743:21:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_struct$_InitData_$255_storage_ptr_$",
+                          "typeString": "type(struct CFAv1Library.InitData storage pointer)"
+                        }
+                      },
+                      "id": 3995,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "structConstructorCall",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "743:336:14",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_InitData_$255_memory_ptr",
+                        "typeString": "struct CFAv1Library.InitData memory"
+                      }
+                    },
+                    "src": "735:344:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_InitData_$255_storage",
+                      "typeString": "struct CFAv1Library.InitData storage ref"
+                    }
+                  },
+                  "id": 3997,
+                  "nodeType": "ExpressionStatement",
+                  "src": "735:344:14"
+                }
+              ]
+            },
+            "id": 3999,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3978,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3977,
+                  "mutability": "mutable",
+                  "name": "host",
+                  "nameLocation": "652:4:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3999,
+                  "src": "640:16:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_ISuperfluid_$3520",
+                    "typeString": "contract ISuperfluid"
+                  },
+                  "typeName": {
+                    "id": 3976,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 3975,
+                      "name": "ISuperfluid",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 3520,
+                      "src": "640:11:14"
+                    },
+                    "referencedDeclaration": 3520,
+                    "src": "640:11:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ISuperfluid_$3520",
+                      "typeString": "contract ISuperfluid"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "629:34:14"
+            },
+            "returnParameters": {
+              "id": 3979,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "664:0:14"
+            },
+            "scope": 4000,
+            "src": "618:469:14",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 4001,
+        "src": "448:682:14",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:1097:14"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.13+commit.abaa5c0e.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-09-20T19:53:09.777Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
